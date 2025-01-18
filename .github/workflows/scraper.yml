@@ -86,22 +86,36 @@ jobs:
           echo "should_run=true" >> $GITHUB_OUTPUT
         fi
 
+    - name: Initialize runtime tracking
+      run: |
+        echo "::notice::Initializing runtime tracking system"
+        if [ -f "last_runtime.txt" ]; then
+          echo "Found existing runtime file"
+          cat last_runtime.txt
+        else
+          echo "Creating initial runtime file"
+          echo "LAST_RUN=0" > last_runtime.txt
+          echo "TARGET_RUN=0" >> last_runtime.txt
+        fi
+
     - name: Download previous runtime
       id: download
-      uses: actions/download-artifact@v4
       continue-on-error: true
+      uses: actions/download-artifact@v4
       with:
         name: last-runtime
         path: .
 
     - name: Log runtime status
       run: |
-        echo "Checking for last runtime file..."
+        echo "::notice::Checking runtime status"
         if [ -f "last_runtime.txt" ]; then
-          echo "Found last_runtime.txt:"
+          echo "Current runtime configuration:"
           cat last_runtime.txt
         else
-          echo "No previous runtime file found (this is normal for first run or after expiration)"
+          echo "Using default runtime configuration"
+          echo "LAST_RUN=0" > last_runtime.txt
+          echo "TARGET_RUN=0" >> last_runtime.txt
         fi
 
     - name: Random interval check
@@ -206,13 +220,31 @@ jobs:
           echo "SCRIPT_FAILED=true" >> $GITHUB_ENV
         fi
       
-    - name: Prepare logs directory
+    - name: Initialize logging
       run: |
-        echo "Ensuring bridge_logs directory exists and has content..."
+        echo "::notice::Setting up logging system"
         mkdir -p bridge_logs
-        echo "Workflow run: ${{ github.run_number }}" > bridge_logs/workflow.log
-        echo "Run time: $(date)" >> bridge_logs/workflow.log
-        echo "Target run time: $(cat last_runtime.txt 2>/dev/null || echo 'No target time set yet')" >> bridge_logs/workflow.log
+        {
+          echo "=== Workflow Run Details ==="
+          echo "Run Number: ${{ github.run_number }}"
+          echo "Run Time: $(date)"
+          echo "Run ID: ${{ github.run_id }}"
+          echo ""
+          echo "=== Runtime Configuration ==="
+          if [ -f "last_runtime.txt" ]; then
+            cat last_runtime.txt
+          else
+            echo "No runtime configuration found"
+          fi
+          echo ""
+          echo "=== Environment ==="
+          echo "Python Version: $(python --version)"
+          echo "Node Version: $(node --version)"
+          echo "Working Directory: $(pwd)"
+        } > bridge_logs/workflow.log
+        
+        echo "Created log file:"
+        cat bridge_logs/workflow.log
 
     - name: Upload logs
       if: always()
