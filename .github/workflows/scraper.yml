@@ -189,6 +189,13 @@ jobs:
       id: random_check
       if: steps.maintenance.outputs.should_run == 'true'
       run: |
+        # Always run on workflow_dispatch
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "Running due to manual trigger"
+          echo "should_run=true" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+        
         # Initialize LAST_RUN and target run time
         LAST_RUN=0
         TARGET_RUN=0
@@ -207,40 +214,13 @@ jobs:
         
         # If we don't have a target run time or we've passed it, generate a new one
         if [ "$TARGET_RUN" -eq 0 ] || [ "$CURRENT_TIME" -ge "$TARGET_RUN" ]; then
-          # Ensure at least 10 minutes have passed since last run
-          MIN_WAIT=$((10 * 60))  # 10 minutes in seconds
-          if [ "$LAST_RUN" -ne 0 ] && [ "$((CURRENT_TIME - LAST_RUN))" -lt "$MIN_WAIT" ]; then
-            echo "Not enough time has passed since last run"
-            echo "should_run=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          
-          # Generate new random target time between 10-40 minutes from last run
-          # If no last run, use current time as base
-          BASE_TIME=$LAST_RUN
-          if [ "$BASE_TIME" -eq 0 ]; then
-            BASE_TIME=$CURRENT_TIME
-          fi
-          
-          # Generate random seconds between 600 (10 min) and 2400 (40 min)
+          echo "Running now and setting new target"
+          echo "LAST_RUN=$CURRENT_TIME" > last_runtime.txt
+          # Generate next target time
           RANDOM_SECONDS=$(python -c "import random; print(random.randint(600, 2400))")
-          TARGET_RUN=$((BASE_TIME + RANDOM_SECONDS))
-          
-          # If we've passed the target time, run now
-          if [ "$CURRENT_TIME" -ge "$TARGET_RUN" ]; then
-            echo "Running now and setting new target"
-            echo "LAST_RUN=$CURRENT_TIME" > last_runtime.txt
-            # Generate next target time
-            RANDOM_SECONDS=$(python -c "import random; print(random.randint(600, 2400))")
-            NEW_TARGET=$((CURRENT_TIME + RANDOM_SECONDS))
-            echo "TARGET_RUN=$NEW_TARGET" >> last_runtime.txt
-            echo "should_run=true" >> $GITHUB_OUTPUT
-          else
-            echo "New target time set for: $(date -d @${TARGET_RUN})"
-            echo "LAST_RUN=$LAST_RUN" > last_runtime.txt
-            echo "TARGET_RUN=$TARGET_RUN" >> last_runtime.txt
-            echo "should_run=false" >> $GITHUB_OUTPUT
-          fi
+          NEW_TARGET=$((CURRENT_TIME + RANDOM_SECONDS))
+          echo "TARGET_RUN=$NEW_TARGET" >> last_runtime.txt
+          echo "should_run=true" >> $GITHUB_OUTPUT
         else
           # We have a future target time
           echo "Waiting for target time: $(date -d @${TARGET_RUN})"
