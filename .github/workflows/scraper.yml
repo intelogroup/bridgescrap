@@ -116,16 +116,19 @@ jobs:
           TARGET_TIME=$((CURRENT_TIME + RANDOM_SECONDS))
           
           # Create state file with JSON format for better structure
-          cat > "$STATE_FILE" << EOL
-          {
-            "last_run": $CURRENT_TIME,
-            "target_run": $TARGET_TIME,
-            "init_time": $CURRENT_TIME,
-            "last_workflow_run": ${{ github.run_number }},
-            "last_update": "$(date -u '+%Y-%m-%dT%H:%M:%SZ')",
-            "history": []
-          }
-          EOL
+          jq -n \
+            --arg time "$CURRENT_TIME" \
+            --arg target "$TARGET_TIME" \
+            --arg run "${{ github.run_number }}" \
+            --arg update "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
+            '{
+              last_run: ($time|tonumber),
+              target_run: ($target|tonumber),
+              init_time: ($time|tonumber),
+              last_workflow_run: ($run|tonumber),
+              last_update: $update,
+              history: []
+            }' > "$STATE_FILE"
           
           # Also create the runtime.txt for backward compatibility
           echo "LAST_RUN=$CURRENT_TIME" > last_runtime.txt
