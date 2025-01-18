@@ -66,12 +66,10 @@ jobs:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
       run: |
-        cat > .env << EOL
-        BRIDGE_USERNAME="${BRIDGE_USERNAME}"
-        BRIDGE_PASSWORD="${BRIDGE_PASSWORD}"
-        EMAIL_USER="${EMAIL_USER}"
-        EMAIL_PASSWORD="${EMAIL_PASSWORD}"
-        EOL
+        echo "BRIDGE_USERNAME=${BRIDGE_USERNAME}" > .env
+        echo "BRIDGE_PASSWORD=${BRIDGE_PASSWORD}" >> .env
+        echo "EMAIL_USER=${EMAIL_USER}" >> .env
+        echo "EMAIL_PASSWORD=${EMAIL_PASSWORD}" >> .env
         
     - name: Create data directory
       run: mkdir -p data
@@ -99,17 +97,27 @@ jobs:
       id: random_check
       if: steps.maintenance.outputs.should_run == 'true'
       run: |
+        # Initialize LAST_RUN
         LAST_RUN=0
         if [ -f "last_runtime.txt" ]; then
-          LAST_RUN=$(cat last_runtime.txt)
+          LAST_RUN=$(cat last_runtime.txt | tr -d '\r\n')
         fi
         
+        # Get current time
         CURRENT_TIME=$(date +%s)
-        TIME_DIFF=$((CURRENT_TIME - LAST_RUN))
+        
+        # Calculate time difference
+        TIME_DIFF=0
+        if [ -n "$LAST_RUN" ]; then
+          TIME_DIFF=$((CURRENT_TIME - LAST_RUN))
+        fi
+        
+        # Set intervals
         MIN_INTERVAL=$((10 * 60))  # 10 minutes in seconds
         MAX_INTERVAL=$((30 * 60))  # 30 minutes in seconds
         
-        if [ $TIME_DIFF -lt $MIN_INTERVAL ]; then
+        # Check if enough time has passed
+        if [ "$TIME_DIFF" -lt "$MIN_INTERVAL" ]; then
           echo "Not enough time has passed since last run (${TIME_DIFF}s < ${MIN_INTERVAL}s)"
           echo "should_run=false" >> $GITHUB_OUTPUT
         else
@@ -117,9 +125,9 @@ jobs:
           RANDOM_MINUTES=$(python -c "import random; print(random.randint(10, 30))")
           NEXT_INTERVAL=$((RANDOM_MINUTES * 60))
           
-          if [ $TIME_DIFF -ge $NEXT_INTERVAL ]; then
+          if [ "$TIME_DIFF" -ge "$NEXT_INTERVAL" ]; then
             echo "Time for next run (${TIME_DIFF}s >= ${NEXT_INTERVAL}s). Setting new timestamp."
-            echo $CURRENT_TIME > last_runtime.txt
+            echo "$CURRENT_TIME" > last_runtime.txt
             echo "should_run=true" >> $GITHUB_OUTPUT
           else
             echo "Waiting for next interval (${TIME_DIFF}s < ${NEXT_INTERVAL}s)"
