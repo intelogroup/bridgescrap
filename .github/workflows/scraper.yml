@@ -97,42 +97,62 @@ jobs:
       id: random_check
       if: steps.maintenance.outputs.should_run == 'true'
       run: |
-        # Initialize LAST_RUN
+        # Initialize LAST_RUN and target run time
         LAST_RUN=0
+        TARGET_RUN=0
         if [ -f "last_runtime.txt" ]; then
-          LAST_RUN=$(cat last_runtime.txt | tr -d '\r\n')
+          while IFS= read -r line || [ -n "$line" ]; do
+            if [[ $line == LAST_RUN=* ]]; then
+              LAST_RUN=${line#LAST_RUN=}
+            elif [[ $line == TARGET_RUN=* ]]; then
+              TARGET_RUN=${line#TARGET_RUN=}
+            fi
+          done < "last_runtime.txt"
         fi
         
         # Get current time
         CURRENT_TIME=$(date +%s)
         
-        # Calculate time difference
-        TIME_DIFF=0
-        if [ -n "$LAST_RUN" ]; then
-          TIME_DIFF=$((CURRENT_TIME - LAST_RUN))
-        fi
-        
-        # Set intervals
-        MIN_INTERVAL=$((10 * 60))  # 10 minutes in seconds
-        MAX_INTERVAL=$((40 * 60))  # 40 minutes in seconds
-        
-        # Check if enough time has passed
-        if [ "$TIME_DIFF" -lt "$MIN_INTERVAL" ]; then
-          echo "Not enough time has passed since last run (${TIME_DIFF}s < ${MIN_INTERVAL}s)"
-          echo "should_run=false" >> $GITHUB_OUTPUT
-        else
-          # Generate random interval between 10 and 40 minutes
-          RANDOM_MINUTES=$(python -c "import random; print(random.randint(10, 40))")
-          NEXT_INTERVAL=$((RANDOM_MINUTES * 60))
+        # If we don't have a target run time or we've passed it, generate a new one
+        if [ "$TARGET_RUN" -eq 0 ] || [ "$CURRENT_TIME" -ge "$TARGET_RUN" ]; then
+          # Ensure at least 10 minutes have passed since last run
+          MIN_WAIT=$((10 * 60))  # 10 minutes in seconds
+          if [ "$LAST_RUN" -ne 0 ] && [ "$((CURRENT_TIME - LAST_RUN))" -lt "$MIN_WAIT" ]; then
+            echo "Not enough time has passed since last run"
+            echo "should_run=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
           
-          if [ "$TIME_DIFF" -ge "$NEXT_INTERVAL" ]; then
-            echo "Time for next run (${TIME_DIFF}s >= ${NEXT_INTERVAL}s). Setting new timestamp."
-            echo "$CURRENT_TIME" > last_runtime.txt
+          # Generate new random target time between 10-40 minutes from last run
+          # If no last run, use current time as base
+          BASE_TIME=$LAST_RUN
+          if [ "$BASE_TIME" -eq 0 ]; then
+            BASE_TIME=$CURRENT_TIME
+          fi
+          
+          # Generate random minutes between 10 and 40
+          RANDOM_MINUTES=$(python -c "import random; print(random.randint(10, 40))")
+          TARGET_RUN=$((BASE_TIME + RANDOM_MINUTES * 60))
+          
+          # If we've passed the target time, run now
+          if [ "$CURRENT_TIME" -ge "$TARGET_RUN" ]; then
+            echo "Running now and setting new target"
+            echo "LAST_RUN=$CURRENT_TIME" > last_runtime.txt
+            # Generate next target time
+            RANDOM_MINUTES=$(python -c "import random; print(random.randint(10, 40))")
+            NEW_TARGET=$((CURRENT_TIME + RANDOM_MINUTES * 60))
+            echo "TARGET_RUN=$NEW_TARGET" >> last_runtime.txt
             echo "should_run=true" >> $GITHUB_OUTPUT
           else
-            echo "Waiting for next interval (${TIME_DIFF}s < ${NEXT_INTERVAL}s)"
+            echo "New target time set for: $(date -d @${TARGET_RUN})"
+            echo "LAST_RUN=$LAST_RUN" > last_runtime.txt
+            echo "TARGET_RUN=$TARGET_RUN" >> last_runtime.txt
             echo "should_run=false" >> $GITHUB_OUTPUT
           fi
+        else
+          # We have a future target time
+          echo "Waiting for target time: $(date -d @${TARGET_RUN})"
+          echo "should_run=false" >> $GITHUB_OUTPUT
         fi
 
     - name: Run assignment checker
