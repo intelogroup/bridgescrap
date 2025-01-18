@@ -2,7 +2,7 @@ name: Bridge Assignments Production Monitor
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Run check every 10 minutes
+    - cron: '*/10 * * * *'  # Trigger every 10 minutes, actual run time will be randomized
   workflow_dispatch:  # Allow manual trigger
 
 env:
@@ -114,15 +114,15 @@ jobs:
         
         # Set intervals
         MIN_INTERVAL=$((10 * 60))  # 10 minutes in seconds
-        MAX_INTERVAL=$((30 * 60))  # 30 minutes in seconds
+        MAX_INTERVAL=$((40 * 60))  # 40 minutes in seconds
         
         # Check if enough time has passed
         if [ "$TIME_DIFF" -lt "$MIN_INTERVAL" ]; then
           echo "Not enough time has passed since last run (${TIME_DIFF}s < ${MIN_INTERVAL}s)"
           echo "should_run=false" >> $GITHUB_OUTPUT
         else
-          # Generate random interval between 10 and 30 minutes
-          RANDOM_MINUTES=$(python -c "import random; print(random.randint(10, 30))")
+          # Generate random interval between 10 and 40 minutes
+          RANDOM_MINUTES=$(python -c "import random; print(random.randint(10, 40))")
           NEXT_INTERVAL=$((RANDOM_MINUTES * 60))
           
           if [ "$TIME_DIFF" -ge "$NEXT_INTERVAL" ]; then
