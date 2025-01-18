@@ -21,6 +21,20 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y jq
+    
+    - name: Install GitHub CLI
+      run: |
+        type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+        && sudo apt update \
+        && sudo apt install gh -y
+    
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -86,37 +100,87 @@ jobs:
           echo "should_run=true" >> $GITHUB_OUTPUT
         fi
 
-    - name: Initialize runtime tracking
+    - name: Load or initialize runtime state
+      id: runtime_init
       run: |
-        echo "::notice::Initializing runtime tracking system"
-        if [ -f "last_runtime.txt" ]; then
-          echo "Found existing runtime file"
-          cat last_runtime.txt
+        echo "::notice::Managing runtime state"
+        STATE_FILE=".github/state/runtime_state.json"
+        
+        if [ -f "$STATE_FILE" ]; then
+          echo "::notice::Loading existing state file"
+          cat "$STATE_FILE"
         else
-          echo "Creating initial runtime file"
-          echo "LAST_RUN=0" > last_runtime.txt
-          echo "TARGET_RUN=0" >> last_runtime.txt
+          echo "::notice::Creating initial state file"
+          CURRENT_TIME=$(date +%s)
+          RANDOM_SECONDS=$(python -c "import random; print(random.randint(600, 2400))")
+          TARGET_TIME=$((CURRENT_TIME + RANDOM_SECONDS))
+          
+          # Create state file with JSON format for better structure
+          cat > "$STATE_FILE" << EOL
+          {
+            "last_run": $CURRENT_TIME,
+            "target_run": $TARGET_TIME,
+            "init_time": $CURRENT_TIME,
+            "last_workflow_run": ${{ github.run_number }},
+            "last_update": "$(date -u '+%Y-%m-%dT%H:%M:%SZ')",
+            "history": []
+          }
+          EOL
+          
+          # Also create the runtime.txt for backward compatibility
+          echo "LAST_RUN=$CURRENT_TIME" > last_runtime.txt
+          echo "TARGET_RUN=$TARGET_TIME" >> last_runtime.txt
+        fi
+        
+        # Parse state file for use in workflow
+        if [ -f "$STATE_FILE" ]; then
+          LAST_RUN=$(jq -r '.last_run' "$STATE_FILE")
+          TARGET_RUN=$(jq -r '.target_run' "$STATE_FILE")
+          echo "LAST_RUN=$LAST_RUN" > last_runtime.txt
+          echo "TARGET_RUN=$TARGET_RUN" >> last_runtime.txt
         fi
 
-    - name: Download previous runtime
-      id: download
-      continue-on-error: true
-      uses: actions/download-artifact@v4
-      with:
-        name: last-runtime
-        path: .
-
-    - name: Log runtime status
+    - name: Update state file
+      if: steps.random_check.outputs.should_run == 'true'
       run: |
-        echo "::notice::Checking runtime status"
-        if [ -f "last_runtime.txt" ]; then
-          echo "Current runtime configuration:"
-          cat last_runtime.txt
-        else
-          echo "Using default runtime configuration"
-          echo "LAST_RUN=0" > last_runtime.txt
-          echo "TARGET_RUN=0" >> last_runtime.txt
-        fi
+        STATE_FILE=".github/state/runtime_state.json"
+        CURRENT_TIME=$(date +%s)
+        RANDOM_SECONDS=$(python -c "import random; print(random.randint(600, 2400))")
+        NEW_TARGET=$((CURRENT_TIME + RANDOM_SECONDS))
+        
+        # Update state file
+        TMP_FILE=$(mktemp)
+        jq --arg time "$CURRENT_TIME" \
+           --arg target "$NEW_TARGET" \
+           --arg update "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
+           --arg run "${{ github.run_number }}" \
+           '.last_run = ($time|tonumber) |
+            .target_run = ($target|tonumber) |
+            .last_update = $update |
+            .last_workflow_run = ($run|tonumber) |
+            .history += [{
+              "run_time": ($time|tonumber),
+              "workflow_run": ($run|tonumber),
+              "target_time": ($target|tonumber)
+            }] |
+            if (.history|length > 100) then
+              .history = .history[1:]
+            else
+              .
+            end' \
+            "$STATE_FILE" > "$TMP_FILE" && mv "$TMP_FILE" "$STATE_FILE"
+        
+        echo "Updated state file:"
+        cat "$STATE_FILE"
+
+    - name: Commit state changes
+      if: steps.random_check.outputs.should_run == 'true'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add .github/state/runtime_state.json
+        git commit -m "Update runtime state [skip ci]" || echo "No changes to commit"
+        git push
 
     - name: Random interval check
       id: random_check
