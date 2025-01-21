@@ -2,7 +2,7 @@ name: Bridge Assignments Production Monitor
 
 on:
   schedule:
-    - cron: '*/20 * * * *'  # Trigger every 10 minutes, actual run time will be randomized
+    - cron: '*/20 * * * *'  # Trigger every 20 minutes, actual run time will be randomized between 20-40 minutes
   workflow_dispatch:  # Allow manual trigger
 
 env:
@@ -112,7 +112,7 @@ jobs:
         else
           echo "::notice::Creating initial state file"
           CURRENT_TIME=$(date +%s)
-          RANDOM_SECONDS=$(python -c "import random; print(random.randint(600, 2400))")
+          RANDOM_SECONDS=$(python -c "import random; print(random.randint(1200, 2400))")
           TARGET_TIME=$((CURRENT_TIME + RANDOM_SECONDS))
           
           # Create state file with JSON format for better structure
@@ -148,7 +148,7 @@ jobs:
       run: |
         STATE_FILE=".github/state/runtime_state.json"
         CURRENT_TIME=$(date +%s)
-        RANDOM_SECONDS=$(python -c "import random; print(random.randint(600, 2400))")
+          RANDOM_SECONDS=$(python -c "import random; print(random.randint(1200, 2400))")
         NEW_TARGET=$((CURRENT_TIME + RANDOM_SECONDS))
         
         # Update state file
@@ -217,7 +217,7 @@ jobs:
           echo "Running now and setting new target"
           echo "LAST_RUN=$CURRENT_TIME" > last_runtime.txt
           # Generate next target time
-          RANDOM_SECONDS=$(python -c "import random; print(random.randint(600, 2400))")
+          RANDOM_SECONDS=$(python -c "import random; print(random.randint(1200, 2400))")
           NEW_TARGET=$((CURRENT_TIME + RANDOM_SECONDS))
           echo "TARGET_RUN=$NEW_TARGET" >> last_runtime.txt
           echo "should_run=true" >> $GITHUB_OUTPUT
