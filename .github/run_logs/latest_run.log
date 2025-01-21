@@ -1,106 +1,80 @@
-=== Latest Run Log (Run ID: 12896470216) ===
-Timestamp: 2025-01-21 21:49:26 UTC
+=== Latest Run Log (Run ID: 12896915212) ===
+Timestamp: 2025-01-21 22:20:09 UTC
 ================================================
 
 === Bridge Logs ===
-2025-01-21 21:47:54,349 - INFO - Starting Bridge Assignment Checker
-2025-01-21 21:47:54,349 - INFO - Running in GitHub Actions environment
-2025-01-21 21:47:54,349 - INFO - Setting up WebDriver...
-2025-01-21 21:47:54,349 - INFO - Using user agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36
-2025-01-21 21:47:54,350 - INFO - Using window size: 1836x1069
-2025-01-21 21:47:54,907 - INFO - Detected Chrome version string: snap
-2025-01-21 21:47:54,907 - WARNING - Could not parse major version from: snap
-2025-01-21 21:47:56,159 - INFO - Detected Chrome version string: 131.0.6778.204
-2025-01-21 21:47:56,159 - INFO - Successfully parsed major version: 131
-2025-01-21 21:47:56,159 - INFO - Using detected Chrome version: 131
-2025-01-21 21:47:56,159 - INFO - Using Chrome version: 131
-2025-01-21 21:47:56,159 - INFO - Running in GitHub Actions environment with headless mode
-2025-01-21 21:47:56,159 - INFO - ====== WebDriver manager ======
-2025-01-21 21:47:56,225 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-21 21:47:56,269 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-21 21:47:56,287 - INFO - There is no [linux64] chromedriver "131.0.6778.264" for browser google-chrome "131.0.6778" in cache
-2025-01-21 21:47:56,287 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-21 21:47:56,325 - INFO - WebDriver version 131.0.6778.264 selected
-2025-01-21 21:47:56,327 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
-2025-01-21 21:47:56,327 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
-2025-01-21 21:47:56,359 - INFO - Driver downloading response is 200
-2025-01-21 21:47:56,402 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-21 21:47:56,528 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264]
-2025-01-21 21:47:56,535 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264/chromedriver-linux64/chromedriver
-2025-01-21 21:47:57,263 - INFO - WebDriver setup completed successfully
-2025-01-21 21:47:57,264 - INFO - Attempting to login...
-2025-01-21 21:47:58,265 - INFO - Adding random delay of 4.32 seconds
-2025-01-21 21:48:02,589 - INFO - Adding initial delay of 2.27 seconds before looking for username field
-2025-01-21 21:48:04,861 - INFO - Waiting up to 16.0 seconds for username field
-2025-01-21 21:48:04,871 - INFO - Successfully found username field
-2025-01-21 21:48:04,871 - INFO - Adding post-delay of 1.85 seconds
-2025-01-21 21:48:06,726 - INFO - Adding random delay of 3.26 seconds
-2025-01-21 21:48:09,990 - INFO - Adding initial delay of 1.96 seconds before looking for password field
-2025-01-21 21:48:11,949 - INFO - Waiting up to 16.2 seconds for password field
-2025-01-21 21:48:11,959 - INFO - Successfully found password field
-2025-01-21 21:48:11,959 - INFO - Adding post-delay of 1.37 seconds
-2025-01-21 21:48:13,329 - INFO - Adding random delay of 3.69 seconds
-2025-01-21 21:48:17,019 - INFO - Adding initial delay of 1.28 seconds before looking for submit button
-2025-01-21 21:48:18,299 - INFO - Waiting up to 16.1 seconds for submit button
-2025-01-21 21:48:18,308 - INFO - Successfully found submit button
-2025-01-21 21:48:18,308 - INFO - Adding post-delay of 1.79 seconds
-2025-01-21 21:48:20,169 - INFO - Adding random delay of 3.21 seconds
-2025-01-21 21:48:23,436 - INFO - Adding random delay of 2.61 seconds
-2025-01-21 21:48:26,047 - INFO - Submitting login form...
-2025-01-21 21:48:26,431 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
-2025-01-21 21:48:26,431 - INFO - Navigating to assignments page...
-2025-01-21 21:48:36,806 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
-2025-01-21 21:48:36,806 - INFO - Adding random delay of 2.08 seconds
-2025-01-21 21:48:38,898 - INFO - Found table using generic table tag
-2025-01-21 21:48:38,903 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
+2025-01-21 22:18:44,156 - INFO - Starting Bridge Assignment Checker
+2025-01-21 22:18:44,156 - INFO - Running in GitHub Actions environment
+2025-01-21 22:18:44,156 - INFO - Setting up WebDriver...
+2025-01-21 22:18:44,156 - INFO - Using user agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+2025-01-21 22:18:44,156 - INFO - Using window size: 1862x1028
+2025-01-21 22:18:44,663 - INFO - Detected Chrome version string: snap
+2025-01-21 22:18:44,663 - WARNING - Could not parse major version from: snap
+2025-01-21 22:18:44,797 - INFO - Detected Chrome version string: 131.0.6778.204
+2025-01-21 22:18:44,797 - INFO - Successfully parsed major version: 131
+2025-01-21 22:18:44,797 - INFO - Using detected Chrome version: 131
+2025-01-21 22:18:44,797 - INFO - Using Chrome version: 131
+2025-01-21 22:18:44,797 - INFO - Running in GitHub Actions environment with headless mode
+2025-01-21 22:18:44,797 - INFO - ====== WebDriver manager ======
+2025-01-21 22:18:44,863 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 22:18:45,064 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 22:18:45,088 - INFO - There is no [linux64] chromedriver "131.0.6778.264" for browser google-chrome "131.0.6778" in cache
+2025-01-21 22:18:45,088 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 22:18:45,153 - INFO - WebDriver version 131.0.6778.264 selected
+2025-01-21 22:18:45,155 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
+2025-01-21 22:18:45,155 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
+2025-01-21 22:18:45,182 - INFO - Driver downloading response is 200
+2025-01-21 22:18:45,247 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 22:18:45,386 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264]
+2025-01-21 22:18:45,393 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264/chromedriver-linux64/chromedriver
+2025-01-21 22:18:46,101 - INFO - WebDriver setup completed successfully
+2025-01-21 22:18:46,101 - INFO - Attempting to login...
+2025-01-21 22:18:47,289 - INFO - Adding random delay of 3.63 seconds
+2025-01-21 22:18:50,916 - INFO - Adding initial delay of 2.78 seconds before looking for username field
+2025-01-21 22:18:53,696 - INFO - Waiting up to 16.5 seconds for username field
+2025-01-21 22:18:53,705 - INFO - Successfully found username field
+2025-01-21 22:18:53,706 - INFO - Adding post-delay of 2.12 seconds
+2025-01-21 22:18:55,822 - INFO - Adding random delay of 4.69 seconds
+2025-01-21 22:19:00,508 - INFO - Adding initial delay of 1.07 seconds before looking for password field
+2025-01-21 22:19:01,581 - INFO - Waiting up to 15.1 seconds for password field
+2025-01-21 22:19:01,591 - INFO - Successfully found password field
+2025-01-21 22:19:01,591 - INFO - Adding post-delay of 1.53 seconds
+2025-01-21 22:19:03,116 - INFO - Adding random delay of 2.26 seconds
+2025-01-21 22:19:05,381 - INFO - Adding initial delay of 2.50 seconds before looking for submit button
+2025-01-21 22:19:07,877 - INFO - Waiting up to 15.7 seconds for submit button
+2025-01-21 22:19:07,886 - INFO - Successfully found submit button
+2025-01-21 22:19:07,886 - INFO - Adding post-delay of 1.90 seconds
+2025-01-21 22:19:09,856 - INFO - Adding random delay of 4.69 seconds
+2025-01-21 22:19:14,606 - INFO - Adding random delay of 4.57 seconds
+2025-01-21 22:19:19,176 - INFO - Submitting login form...
+2025-01-21 22:19:19,601 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
+2025-01-21 22:19:19,602 - INFO - Navigating to assignments page...
+2025-01-21 22:19:30,023 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
+2025-01-21 22:19:30,023 - INFO - Adding random delay of 3.16 seconds
+2025-01-21 22:19:33,197 - INFO - Found table using generic table tag
+2025-01-21 22:19:33,202 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
 		<tbody><tr class="grid_table_header">
 			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="c
-2025-01-21 21:48:48,946 - INFO - Table text preview: Customer Service
+2025-01-21 22:19:43,261 - INFO - Table text preview: Customer Service
 Date / Time Language Type of service Assignment info Comments Action
-AMI Expeditionary Healthcare 1/22/2025
-1:00 PM Haitian Creole Video Remote Interpretation Contact person's name an
-2025-01-21 21:48:48,959 - INFO - Found 2 total rows
-2025-01-21 21:48:48,964 - INFO - Row 0 HTML: <tr class="grid_table_header">
+2025-01-21 22:19:43,274 - INFO - Found 1 total rows
+2025-01-21 22:19:43,278 - INFO - Row 0 HTML: <tr class="grid_table_header">
 			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="col">Comments</th><th class="grid_table_header" scope="col">Action</th>
 		</tr>
-2025-01-21 21:48:48,968 - INFO - Row 1 HTML: <tr class="mouseover">
-			<td>
-                                            <span id="lblCustomer">AMI Expeditionary Healthcare</span>
-                                        </td><td>
-								            1/22/2025<br>
-								            1:00 PM
-									    </td><td>
-                                            <span id="lblLang">Haitian Creole</span>
-                                        </td><td>
-								            <span id="lblTypeofService">Video Remote Interpretation</span> 
-								        </td><td>
-								            Contact person's name and phone number: Victor Andino Victor.Andino@matcc.ami.health.<br>
-									        Contact person's email address:Victor.Andino@matcc.ami.health.<br>
-                                            Address:  Virtual<br>
-											<span id="lblLink">https://teams.microsoft.com/l/meetup-join/19%3ameeting_MzljYTgyNTYtZTVkYi00MzI3LWEzN2MtNjhlNWFmYjE5NmU1%40thread.v2/0?context=%7b%22Tid%22%3a%22c639cffb-7c85-48c4-b079-0d324f676b66%22%2c%22Oid%22%3a%22e97bbc12-4f15-4370-8460-5badd5faebfa%22%7d</span><br>  	
-								                                               
-                                            Client name and phone: Multiple Clients; <br>
-                                            
-									    </td><td>
-								            1-2; Must use COMPUTER, verify that link was provided, check connectivity 15 min prior the appointment. Call LBridge  413-478-4342 with any issues immediately.
-								       </td><td align="left"> 
-									         <input type="submit" name="ctl00$InterpretersContent$gvOrders$ctl02$cmbAccept" value="Accept" onclick="return confirm('Please confirm if you would like to accept this assignment');" id="cmbAccept" class="buttonSubmit">							         
-									    </td>
-		</tr>
-2025-01-21 21:49:09,059 - INFO - Found 1 data rows after filtering headers
-2025-01-21 21:49:09,059 - INFO - Found 0 assignments
-2025-01-21 21:49:09,059 - WARNING - No assignments found
-2025-01-21 21:49:09,060 - INFO - Chrome driver cleaned up successfully
+2025-01-21 22:19:53,338 - INFO - Found 0 data rows after filtering headers
+2025-01-21 22:19:53,338 - INFO - Found 0 assignments
+2025-01-21 22:19:53,338 - WARNING - No assignments found
+2025-01-21 22:19:53,339 - INFO - Chrome driver cleaned up successfully
 
 === Workflow Logs ===
 === Workflow Run Details ===
-Run Number: 492
-Run Time: Tue Jan 21 21:49:10 UTC 2025
-Run ID: 12896470216
+Run Number: 493
+Run Time: Tue Jan 21 22:19:54 UTC 2025
+Run ID: 12896915212
 
 === Runtime Configuration ===
-LAST_RUN=1737496072
-TARGET_RUN=1737497721
+LAST_RUN=1737497922
+TARGET_RUN=1737500226
 
 === Environment ===
 Python Version: Python 3.11.11
@@ -108,12 +82,12 @@ Node Version: v20.18.1
 Working Directory: /home/runner/work/bridgescrap/bridgescrap
 
 === Runtime Info ===
-LAST_RUN=1737496072
-TARGET_RUN=1737497721
+LAST_RUN=1737497922
+TARGET_RUN=1737500226
 
 === Status ===
-Last run: Tue Jan 21 21:49:11 UTC 2025
+Last run: Tue Jan 21 22:19:55 UTC 2025
 Status: success
-Run number: 492
-Next run: Not before Tue Jan 21 21:59:11 UTC 2025
+Run number: 493
+Next run: Not before Tue Jan 21 22:29:55 UTC 2025
 
