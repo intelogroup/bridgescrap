@@ -1,0 +1,124 @@
+=== Latest Run Log (Run ID: 12893777393) ===
+Timestamp: 2025-01-21 18:51:21 UTC
+================================================
+
+=== Bridge Logs ===
+2025-01-21 18:49:46,148 - INFO - Starting Bridge Assignment Checker
+2025-01-21 18:49:46,148 - INFO - Running in GitHub Actions environment
+2025-01-21 18:49:46,148 - INFO - Setting up WebDriver...
+2025-01-21 18:49:46,148 - INFO - Using user agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+2025-01-21 18:49:46,148 - INFO - Using window size: 1908x1052
+2025-01-21 18:49:46,678 - INFO - Detected Chrome version string: snap
+2025-01-21 18:49:46,679 - WARNING - Could not parse major version from: snap
+2025-01-21 18:49:46,826 - INFO - Detected Chrome version string: 132.0.6834.83
+2025-01-21 18:49:46,826 - INFO - Successfully parsed major version: 132
+2025-01-21 18:49:46,827 - INFO - Using detected Chrome version: 132
+2025-01-21 18:49:46,827 - INFO - Using Chrome version: 132
+2025-01-21 18:49:46,827 - INFO - Running in GitHub Actions environment with headless mode
+2025-01-21 18:49:46,827 - INFO - ====== WebDriver manager ======
+2025-01-21 18:49:46,894 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 18:49:46,930 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 18:49:46,954 - INFO - There is no [linux64] chromedriver "132.0.6834.83" for browser google-chrome "132.0.6834" in cache
+2025-01-21 18:49:46,954 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 18:49:47,018 - INFO - WebDriver version 132.0.6834.83 selected
+2025-01-21 18:49:47,020 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.83/linux64/chromedriver-linux64.zip
+2025-01-21 18:49:47,020 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.83/linux64/chromedriver-linux64.zip
+2025-01-21 18:49:47,047 - INFO - Driver downloading response is 200
+2025-01-21 18:49:47,113 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-21 18:49:47,255 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.83]
+2025-01-21 18:49:47,262 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.83/chromedriver-linux64/chromedriver
+2025-01-21 18:49:47,881 - INFO - WebDriver setup completed successfully
+2025-01-21 18:49:47,881 - INFO - Attempting to login...
+2025-01-21 18:49:49,043 - INFO - Adding random delay of 4.62 seconds
+2025-01-21 18:49:53,659 - INFO - Adding initial delay of 2.30 seconds before looking for username field
+2025-01-21 18:49:55,955 - INFO - Waiting up to 16.7 seconds for username field
+2025-01-21 18:49:55,965 - INFO - Successfully found username field
+2025-01-21 18:49:55,965 - INFO - Adding post-delay of 1.65 seconds
+2025-01-21 18:49:57,612 - INFO - Adding random delay of 2.04 seconds
+2025-01-21 18:49:59,651 - INFO - Adding initial delay of 1.60 seconds before looking for password field
+2025-01-21 18:50:01,253 - INFO - Waiting up to 16.7 seconds for password field
+2025-01-21 18:50:01,263 - INFO - Successfully found password field
+2025-01-21 18:50:01,263 - INFO - Adding post-delay of 1.52 seconds
+2025-01-21 18:50:02,787 - INFO - Adding random delay of 2.83 seconds
+2025-01-21 18:50:05,613 - INFO - Adding initial delay of 2.89 seconds before looking for submit button
+2025-01-21 18:50:08,502 - INFO - Waiting up to 17.0 seconds for submit button
+2025-01-21 18:50:08,510 - INFO - Successfully found submit button
+2025-01-21 18:50:08,510 - INFO - Adding post-delay of 2.95 seconds
+2025-01-21 18:50:11,533 - INFO - Adding random delay of 3.81 seconds
+2025-01-21 18:50:15,401 - INFO - Adding random delay of 3.04 seconds
+2025-01-21 18:50:18,443 - INFO - Submitting login form...
+2025-01-21 18:50:18,884 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
+2025-01-21 18:50:18,884 - INFO - Navigating to assignments page...
+2025-01-21 18:50:19,300 - INFO - Adding random delay of 2.02 seconds
+2025-01-21 18:50:21,333 - INFO - Found table using generic table tag
+2025-01-21 18:50:31,379 - ERROR - Error in get_assignments: Message: 
+. Exiting function.
+2025-01-21 18:50:35,380 - INFO - Navigating to assignments page...
+2025-01-21 18:50:35,664 - INFO - Adding random delay of 2.05 seconds
+2025-01-21 18:50:37,719 - INFO - Found table using generic table tag
+2025-01-21 18:50:47,769 - ERROR - Error in get_assignments: Message: 
+. Exiting function.
+2025-01-21 18:50:51,769 - INFO - Navigating to assignments page...
+2025-01-21 18:50:52,183 - INFO - Adding random delay of 3.99 seconds
+2025-01-21 18:50:56,176 - INFO - Found table using generic table tag
+2025-01-21 18:51:06,227 - ERROR - Error in get_assignments: Message: 
+. Exiting function.
+2025-01-21 18:51:06,227 - ERROR - An error occurred during execution: RetryError[<Future at 0x7fa7438c8350 state=finished raised TimeoutException>]
+2025-01-21 18:51:06,228 - ERROR - Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 478, in __call__
+    result = fn(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/bridgescrap/bridgescrap/assignments.py", line 63, in get_assignments
+    rows = WebDriverWait(driver, 10).until(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/selenium/webdriver/support/wait.py", line 146, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/bridgescrap/bridgescrap/main.py", line 201, in main
+    assignments = get_assignments(driver)
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 336, in wrapped_f
+    return copy(f, *args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 475, in __call__
+    do = self.iter(retry_state=retry_state)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 376, in iter
+    result = action(retry_state)
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/tenacity/__init__.py", line 419, in exc_check
+    raise retry_exc from fut.exception()
+tenacity.RetryError: RetryError[<Future at 0x7fa7438c8350 state=finished raised TimeoutException>]
+
+2025-01-21 18:51:06,383 - INFO - Chrome driver cleaned up successfully
+
+=== Workflow Logs ===
+=== Workflow Run Details ===
+Run Number: 483
+Run Time: Tue Jan 21 18:51:07 UTC 2025
+Run ID: 12893777393
+
+=== Runtime Configuration ===
+LAST_RUN=1737485384
+TARGET_RUN=1737487595
+
+=== Environment ===
+Python Version: Python 3.11.11
+Node Version: v20.18.1
+Working Directory: /home/runner/work/bridgescrap/bridgescrap
+
+=== Runtime Info ===
+LAST_RUN=1737485384
+TARGET_RUN=1737487595
+
+=== Status ===
+Last run: Tue Jan 21 18:51:08 UTC 2025
+Status: failure
+Run number: 483
+Next run: Not before Tue Jan 21 19:01:08 UTC 2025
+
