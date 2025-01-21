@@ -1,0 +1,87 @@
+name: Fetch Latest Run Logs
+
+on:
+  workflow_dispatch:  # Manual trigger
+  workflow_run:
+    workflows: ["Bridge Assignments Production Monitor"]
+    types:
+      - completed
+
+jobs:
+  fetch-logs:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Get latest run logs
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        # Create logs directory if it doesn't exist
+        mkdir -p .github/run_logs
+        
+        # Get the latest run ID
+        LATEST_RUN_ID=$(gh run list --workflow "Bridge Assignments Production Monitor" --limit 1 --json databaseId --jq '.[0].databaseId')
+        
+        if [ -n "$LATEST_RUN_ID" ]; then
+          echo "Latest run ID: $LATEST_RUN_ID"
+          
+          # Download all artifacts from the latest run
+          mkdir -p temp_artifacts
+          cd temp_artifacts
+          
+          # Download and extract each artifact
+          gh run download $LATEST_RUN_ID
+          
+          # Combine logs into a single file
+          {
+            echo "=== Latest Run Log (Run ID: $LATEST_RUN_ID) ==="
+            echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            echo "================================================"
+            echo
+            
+            # Include bridge logs if they exist
+            if [ -d "bridge-logs-"* ]; then
+              echo "=== Bridge Logs ==="
+              cat bridge-logs-*/app.log 2>/dev/null || echo "No bridge logs found"
+              echo
+            fi
+            
+            # Include workflow logs if they exist
+            if [ -d "bridge-logs-"* ]; then
+              echo "=== Workflow Logs ==="
+              cat bridge-logs-*/workflow.log 2>/dev/null || echo "No workflow logs found"
+              echo
+            fi
+            
+            # Include runtime info if it exists
+            if [ -f "last-runtime/last_runtime.txt" ]; then
+              echo "=== Runtime Info ==="
+              cat last-runtime/last_runtime.txt
+              echo
+            fi
+            
+            # Include status if it exists
+            if [ -f "status/status.txt" ]; then
+              echo "=== Status ==="
+              cat status/status.txt
+              echo
+            fi
+          } > "../.github/run_logs/latest_run.log"
+          
+          cd ..
+          rm -rf temp_artifacts
+          
+          # Commit and push the log file
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/run_logs/latest_run.log
+          git commit -m "Update latest run log [skip ci]" || echo "No changes to commit"
+          git push
+        else
+          echo "No runs found"
+        fi
