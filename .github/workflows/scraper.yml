@@ -2,7 +2,7 @@ name: Bridge Assignments Production Monitor
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Trigger every 10 minutes, actual run time will be randomized
+    - cron: '*/20 * * * *'  # Trigger every 10 minutes, actual run time will be randomized
   workflow_dispatch:  # Allow manual trigger
 
 env:
