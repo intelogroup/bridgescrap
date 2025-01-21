@@ -46,16 +46,47 @@ def cleanup_driver(driver):
         logger.error(traceback.format_exc())
 
 def save_assignments(assignments, filename="assignments.txt"):
-    """Save assignments to a file"""
+    """Save assignments to a file with consistent formatting"""
     try:
+        # Extract location and other details from info field
+        formatted_assignments = []
+        for assignment in assignments:
+            formatted = {}
+            # Copy basic fields
+            formatted['customer'] = assignment.get('customer', '')
+            formatted['date_time'] = assignment.get('date_time', '')
+            formatted['language'] = assignment.get('language', '')
+            formatted['service_type'] = assignment.get('service_type', '')
+            
+            # Parse info field
+            info = assignment.get('info', '')
+            for line in info.split('\n'):
+                line = line.strip()
+                if 'Contact person\'s name and phone number:' in line:
+                    formatted['contact_person_name_and_phone'] = line.split(':', 1)[1].strip()
+                elif 'Contact person\'s email address:' in line:
+                    formatted['contact_person\'s_email_address'] = line.split(':', 1)[1].strip()
+                elif 'Address:' in line:
+                    formatted['address'] = line.split(':', 1)[1].strip()
+                elif 'Location:' in line:
+                    formatted['location'] = line.split(':', 1)[1].strip()
+                elif 'Client name and phone:' in line:
+                    formatted['client_name_and_phone'] = line.split(':', 1)[1].strip()
+            
+            formatted['comments'] = assignment.get('comments', '')
+            formatted_assignments.append(formatted)
+        
+        # Write formatted assignments to file
         with open(filename, 'w', encoding='utf-8') as f:
             f.write(f"Bridge Assignments Report - {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
-            for i, assignment in enumerate(assignments, 1):
+            for i, assignment in enumerate(formatted_assignments, 1):
                 f.write(f"Assignment #{i}:\n")
                 f.write("-" * 30 + "\n")
-                for key, value in assignment.items():
-                    f.write(f"{key.title()}: {value}\n")
+                for key, value in sorted(assignment.items()):  # Sort keys for consistent order
+                    if value:  # Only write non-empty values
+                        f.write(f"{key.title()}: {value}\n")
                 f.write("\n")
+        
         logger.info(f"Assignments saved to {filename}")
         return True
     except Exception as e:
@@ -67,17 +98,23 @@ def parse_assignments(content):
     """Parse assignments from file content"""
     assignments_list = []
     current_assignment = {}
-    lines = [line.strip() for line in content.split('\n') if line.strip()]
+    # Skip header lines and empty lines
+    lines = [line.strip() for line in content.split('\n') 
+            if line.strip() and not line.startswith('Bridge Assignments Report')]
     
     for line in lines:
         if line.startswith('Assignment #'):
             if current_assignment:
                 assignments_list.append(current_assignment)
             current_assignment = {}
+        elif line.startswith('-'): # Skip separator lines
+            continue
         elif ':' in line:
             key, value = [part.strip() for part in line.split(':', 1)]
             # Normalize keys to make comparison more reliable
             key = key.lower().replace(' ', '_')
+            # Normalize empty or n/a values
+            value = '' if value.lower() in ['n/a', 'none', ''] else value
             current_assignment[key] = value
     
     if current_assignment:
@@ -88,34 +125,37 @@ def compare_assignments(prev_assignments, curr_assignments):
     """Compare assignments with detailed change tracking"""
     changes = []
     
-    # Handle case where number of assignments changed
-    if len(prev_assignments) != len(curr_assignments):
-        prev_count = len(prev_assignments)
-        curr_count = len(curr_assignments)
-        changes.append(f"Assignment count changed from {prev_count} to {curr_count}")
-        
-        # If assignments were added
-        if curr_count > prev_count:
-            for i in range(prev_count, curr_count):
-                changes.append(f"New assignment added: {curr_assignments[i].get('customer', 'Unknown')} - "
-                             f"{curr_assignments[i].get('date_time', 'No date')} - "
-                             f"{curr_assignments[i].get('language', 'No language')}")
-        
-        # If assignments were removed
-        elif prev_count > curr_count:
-            for i in range(curr_count, prev_count):
-                changes.append(f"Assignment removed: {prev_assignments[i].get('customer', 'Unknown')} - "
-                             f"{prev_assignments[i].get('date_time', 'No date')} - "
-                             f"{prev_assignments[i].get('language', 'No language')}")
+    # Create sets of assignment identifiers (using customer, date_time, and language as unique identifiers)
+    def get_assignment_key(assignment):
+        return (
+            assignment.get('customer', ''),
+            assignment.get('date_time', ''),
+            assignment.get('language', '')
+        )
     
-    # Compare common assignments
-    common_count = min(len(prev_assignments), len(curr_assignments))
+    prev_keys = {get_assignment_key(a) for a in prev_assignments}
+    curr_keys = {get_assignment_key(a) for a in curr_assignments}
+    
+    # Find new and removed assignments
+    new_keys = curr_keys - prev_keys
+    removed_keys = prev_keys - curr_keys
+    
+    # Log new assignments
+    for key in new_keys:
+        changes.append(f"New assignment added: {key[0]} - {key[1]} - {key[2]}")
+    
+    # Log removed assignments
+    for key in removed_keys:
+        changes.append(f"Assignment removed: {key[0]} - {key[1]} - {key[2]}")
+    
+    # Compare assignments that exist in both lists
+    common_keys = prev_keys & curr_keys
     important_fields = ['customer', 'date_time', 'language', 'service_type', 'location', 
                        'client_name_and_phone', 'contact_person\'s_email_address']
     
-    for i in range(common_count):
-        prev = prev_assignments[i]
-        curr = curr_assignments[i]
+    for key in common_keys:
+        prev = next(a for a in prev_assignments if get_assignment_key(a) == key)
+        curr = next(a for a in curr_assignments if get_assignment_key(a) == key)
         assignment_changes = []
         
         for field in important_fields:
@@ -125,7 +165,7 @@ def compare_assignments(prev_assignments, curr_assignments):
                 assignment_changes.append(f"{field}: '{prev_value}' → '{curr_value}'")
         
         if assignment_changes:
-            changes.append(f"Changes in Assignment #{i+1}:")
+            changes.append(f"Changes in Assignment ({key[0]}, {key[1]}):")
             changes.extend([f"  - {change}" for change in assignment_changes])
     
     return bool(changes), changes
