@@ -1,106 +1,149 @@
-=== Latest Run Log (Run ID: 12911655551) ===
-Timestamp: 2025-01-22 15:38:16 UTC
+=== Latest Run Log (Run ID: 12911871085) ===
+Timestamp: 2025-01-22 15:50:50 UTC
 ================================================
 
 === Bridge Logs ===
-2025-01-22 15:36:38,863 - INFO - Starting Bridge Assignment Checker
-2025-01-22 15:36:38,863 - INFO - Running in GitHub Actions environment
-2025-01-22 15:36:38,864 - INFO - Setting up WebDriver...
-2025-01-22 15:36:38,864 - INFO - Using user agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
-2025-01-22 15:36:38,864 - INFO - Using window size: 1843x1046
-2025-01-22 15:36:39,360 - INFO - Detected Chrome version string: snap
-2025-01-22 15:36:39,360 - WARNING - Could not parse major version from: snap
-2025-01-22 15:36:39,505 - INFO - Detected Chrome version string: 131.0.6778.204
-2025-01-22 15:36:39,505 - INFO - Successfully parsed major version: 131
-2025-01-22 15:36:39,505 - INFO - Using detected Chrome version: 131
-2025-01-22 15:36:39,505 - INFO - Using Chrome version: 131
-2025-01-22 15:36:39,506 - INFO - Running in GitHub Actions environment with headless mode
-2025-01-22 15:36:39,506 - INFO - ====== WebDriver manager ======
-2025-01-22 15:36:39,572 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 15:36:39,588 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 15:36:39,601 - INFO - There is no [linux64] chromedriver "131.0.6778.264" for browser google-chrome "131.0.6778" in cache
-2025-01-22 15:36:39,601 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 15:36:39,640 - INFO - WebDriver version 131.0.6778.264 selected
-2025-01-22 15:36:39,642 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
-2025-01-22 15:36:39,642 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
-2025-01-22 15:36:39,721 - INFO - Driver downloading response is 200
-2025-01-22 15:36:39,900 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 15:36:40,028 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264]
-2025-01-22 15:36:40,035 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264/chromedriver-linux64/chromedriver
-2025-01-22 15:36:40,674 - INFO - WebDriver setup completed successfully
-2025-01-22 15:36:40,674 - INFO - Attempting to login...
-2025-01-22 15:36:41,552 - INFO - Adding random delay of 3.34 seconds
-2025-01-22 15:36:44,896 - INFO - Adding initial delay of 2.18 seconds before looking for username field
-2025-01-22 15:36:47,078 - INFO - Waiting up to 16.3 seconds for username field
-2025-01-22 15:36:47,088 - INFO - Successfully found username field
-2025-01-22 15:36:47,088 - INFO - Adding post-delay of 1.96 seconds
-2025-01-22 15:36:49,047 - INFO - Adding random delay of 3.03 seconds
-2025-01-22 15:36:52,072 - INFO - Adding initial delay of 1.72 seconds before looking for password field
-2025-01-22 15:36:53,793 - INFO - Waiting up to 15.2 seconds for password field
-2025-01-22 15:36:53,802 - INFO - Successfully found password field
-2025-01-22 15:36:53,802 - INFO - Adding post-delay of 2.63 seconds
-2025-01-22 15:36:56,428 - INFO - Adding random delay of 4.33 seconds
-2025-01-22 15:37:00,754 - INFO - Adding initial delay of 2.26 seconds before looking for submit button
-2025-01-22 15:37:03,016 - INFO - Waiting up to 16.1 seconds for submit button
-2025-01-22 15:37:03,024 - INFO - Successfully found submit button
-2025-01-22 15:37:03,024 - INFO - Adding post-delay of 2.48 seconds
-2025-01-22 15:37:05,619 - INFO - Adding random delay of 2.15 seconds
-2025-01-22 15:37:07,830 - INFO - Adding random delay of 4.18 seconds
-2025-01-22 15:37:12,009 - INFO - Submitting login form...
-2025-01-22 15:37:12,403 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
-2025-01-22 15:37:12,403 - INFO - Navigating to assignments page...
-2025-01-22 15:37:22,866 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
-2025-01-22 15:37:22,867 - INFO - Adding random delay of 4.86 seconds
-2025-01-22 15:37:27,735 - INFO - Found table using generic table tag
-2025-01-22 15:37:27,740 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
+2025-01-22 15:48:34,320 - INFO - Starting Bridge Assignment Checker
+2025-01-22 15:48:34,320 - INFO - Running in GitHub Actions environment
+2025-01-22 15:48:34,320 - INFO - Setting up WebDriver...
+2025-01-22 15:48:34,320 - INFO - Using user agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+2025-01-22 15:48:34,320 - INFO - Using window size: 1903x1046
+2025-01-22 15:48:34,892 - INFO - Detected Chrome version string: snap
+2025-01-22 15:48:34,892 - WARNING - Could not parse major version from: snap
+2025-01-22 15:48:35,060 - INFO - Detected Chrome version string: 131.0.6778.204
+2025-01-22 15:48:35,060 - INFO - Successfully parsed major version: 131
+2025-01-22 15:48:35,060 - INFO - Using detected Chrome version: 131
+2025-01-22 15:48:35,060 - INFO - Using Chrome version: 131
+2025-01-22 15:48:35,060 - INFO - Running in GitHub Actions environment with headless mode
+2025-01-22 15:48:35,060 - INFO - ====== WebDriver manager ======
+2025-01-22 15:48:35,127 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 15:48:35,141 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 15:48:35,152 - INFO - There is no [linux64] chromedriver "131.0.6778.264" for browser google-chrome "131.0.6778" in cache
+2025-01-22 15:48:35,152 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 15:48:35,184 - INFO - WebDriver version 131.0.6778.264 selected
+2025-01-22 15:48:35,186 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
+2025-01-22 15:48:35,186 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
+2025-01-22 15:48:35,260 - INFO - Driver downloading response is 200
+2025-01-22 15:48:35,345 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 15:48:35,469 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264]
+2025-01-22 15:48:35,477 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264/chromedriver-linux64/chromedriver
+2025-01-22 15:48:51,946 - INFO - WebDriver setup completed successfully
+2025-01-22 15:48:51,946 - INFO - Attempting to login...
+2025-01-22 15:48:53,587 - INFO - Adding random delay of 4.52 seconds
+2025-01-22 15:48:58,104 - INFO - Adding initial delay of 1.67 seconds before looking for username field
+2025-01-22 15:48:59,778 - INFO - Waiting up to 16.7 seconds for username field
+2025-01-22 15:48:59,788 - INFO - Successfully found username field
+2025-01-22 15:48:59,788 - INFO - Adding post-delay of 1.44 seconds
+2025-01-22 15:49:01,232 - INFO - Adding random delay of 4.67 seconds
+2025-01-22 15:49:05,906 - INFO - Adding initial delay of 1.32 seconds before looking for password field
+2025-01-22 15:49:07,227 - INFO - Waiting up to 16.1 seconds for password field
+2025-01-22 15:49:07,236 - INFO - Successfully found password field
+2025-01-22 15:49:07,236 - INFO - Adding post-delay of 1.61 seconds
+2025-01-22 15:49:08,848 - INFO - Adding random delay of 2.17 seconds
+2025-01-22 15:49:11,021 - INFO - Adding initial delay of 1.99 seconds before looking for submit button
+2025-01-22 15:49:13,008 - INFO - Waiting up to 16.8 seconds for submit button
+2025-01-22 15:49:13,017 - INFO - Successfully found submit button
+2025-01-22 15:49:13,017 - INFO - Adding post-delay of 2.55 seconds
+2025-01-22 15:49:15,709 - INFO - Adding random delay of 3.14 seconds
+2025-01-22 15:49:18,911 - INFO - Adding random delay of 4.14 seconds
+2025-01-22 15:49:23,050 - INFO - Submitting login form...
+2025-01-22 15:49:23,391 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
+2025-01-22 15:49:23,391 - INFO - Navigating to assignments page...
+2025-01-22 15:49:33,752 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
+2025-01-22 15:49:33,752 - INFO - Adding random delay of 4.77 seconds
+2025-01-22 15:49:38,527 - INFO - Found table using generic table tag
+2025-01-22 15:49:38,533 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
 		<tbody><tr class="grid_table_header">
 			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="c
-2025-01-22 15:37:37,795 - INFO - Table text preview: Customer Service
+2025-01-22 15:49:48,586 - INFO - Table text preview: Customer Service
 Date / Time Language Type of service Assignment info Comments Action
-Massachusetts Commission for the Blind 2/5/2025
-12:30 PM Haitian Creole In-person Interpretation Contact person's 
-2025-01-22 15:37:37,808 - INFO - Found 2 total rows
-2025-01-22 15:37:37,812 - INFO - Row 0 HTML: <tr class="grid_table_header">
+AMI Expeditionary Healthcare 1/23/2025
+10:30 AM Haitian Creole Video Remote Interpretation Contact person's name a
+2025-01-22 15:49:48,601 - INFO - Found 4 total rows
+2025-01-22 15:49:48,606 - INFO - Row 0 HTML: <tr class="grid_table_header">
 			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="col">Comments</th><th class="grid_table_header" scope="col">Action</th>
 		</tr>
-2025-01-22 15:37:37,816 - INFO - Row 1 HTML: <tr class="grid_table_alt">
+2025-01-22 15:49:48,610 - INFO - Row 1 HTML: <tr class="mouseover">
 			<td>
-                                            <span id="lblCustomer">Massachusetts Commission for the Blind</span>
+                                            <span id="lblCustomer">AMI Expeditionary Healthcare</span>
                                         </td><td>
-								            2/5/2025<br>
-								            12:30 PM
+								            1/23/2025<br>
+								            10:30 AM
 									    </td><td>
                                             <span id="lblLang">Haitian Creole</span>
                                         </td><td>
-								            <span id="lblTypeofService">In-person Interpretation</span> 
+								            <span id="lblTypeofService">Video Remote Interpretation</span> 
 								        </td><td>
-								            Contact person's name and phone number: Justin McCarthy, MA Counselor Mobile: 1-617-823-4688  Office: 1-800-392-6450<br>
-									        Contact person's email address:justin.mccarthy@mass.gov<br>
-                                            Address:  60 E Bacon St., Attleboro, MA 02703.<br>
-											<br>  	
+								            Contact person's name and phone number: Liliana Piedrahita<br>
+									        Contact person's email address:Liliana.Piedrahita@matcc.ami.health;<br>
+                                            Address:  VRI<br>
+											<span id="lblLink">https://teams.microsoft.com/l/meetup-join/19%3ameeting_OTkxMzU5N2UtZDQxNC00ZGQxLTkzMTAtNzZjZjM1Mjg5MzUy%40thread.v2/0?context=%7b%22Tid%22%3a%22c639cffb-7c85-48c4-b079-0d324f676b66%22%2c%22Oid%22%3a%22929c79d6-4976-4ef0-a10a-4e59ba642f96%22%7d  &nbsp;</span><br>  	
 								                                               
-                                            Client name and phone: Merana Francois; <br>
+                                            Client name and phone: multiple clients; <br>
                                             
 									    </td><td>
-								            Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues.
+								            10:30-12:30pm; Must use COMPUTER, verify that link was provided, check connectivity 15 min prior the appointment. Call LBridge  413-478-4342 with any issues immediately.
 								       </td><td align="left"> 
-									         <input type="submit" name="ctl00$InterpretersContent$gvOrders$ctl13$cmbAccept" value="Accept" onclick="return confirm('Please confirm if you would like to accept this assignment');" id="cmbAccept" class="buttonSubmit">							         
+									         <input type="submit" name="ctl00$InterpretersContent$gvOrders$ctl02$cmbAccept" value="Accept" onclick="return confirm('Please confirm if you would like to accept this assignment');" id="cmbAccept" class="buttonSubmit">							         
 									    </td>
 		</tr>
-2025-01-22 15:37:57,905 - INFO - Found 1 data rows after filtering headers
-2025-01-22 15:37:57,905 - INFO - Found 0 assignments
-2025-01-22 15:37:57,906 - WARNING - No assignments found
-2025-01-22 15:37:58,054 - INFO - Chrome driver cleaned up successfully
+2025-01-22 15:50:28,732 - INFO - Found 3 data rows after filtering headers
+2025-01-22 15:50:28,817 - INFO - Found 2 assignments
+2025-01-22 15:50:28,817 - INFO - 
+Found 2 assignments
+2025-01-22 15:50:28,817 - INFO - 
+Assignment #1:
+2025-01-22 15:50:28,817 - INFO - Customer: AMI Expeditionary Healthcare
+2025-01-22 15:50:28,817 - INFO - Date_Time: 1/24/2025
+10:30 AM
+2025-01-22 15:50:28,817 - INFO - Language: Haitian Creole
+2025-01-22 15:50:28,817 - INFO - Service_Type: Video Remote Interpretation
+2025-01-22 15:50:28,817 - INFO - Info: Contact person's name and phone number: Liliana Piedrahita
+Contact person's email address:Liliana.Piedrahita@matcc.ami.health;
+Address: VRI
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_MTY5OGVhMGMtMDMxYS00N2NhLWI3MzktMWIzNjk2YWM5MDU2%40thread.v2/0?context=%7b%22Tid%22%3a%22c639cffb-7c85-48c4-b079-0d324f676b66%22%2c%22Oid%22%3a%22929c79d6-4976-4ef0-a10a-4e59ba642f96%22%7d  
+Client name and phone: multiple clients;
+2025-01-22 15:50:28,817 - INFO - Comments: 10:30-12:30pm; Must use COMPUTER, verify that link was provided, check connectivity 15 min prior the appointment. Call LBridge 413-478-4342 with any issues immediately.
+2025-01-22 15:50:28,817 - INFO - 
+Assignment #2:
+2025-01-22 15:50:28,817 - INFO - Customer: Massachusetts Commission for the Blind
+2025-01-22 15:50:28,818 - INFO - Date_Time: 2/5/2025
+12:30 PM
+2025-01-22 15:50:28,818 - INFO - Language: Haitian Creole
+2025-01-22 15:50:28,818 - INFO - Service_Type: In-person Interpretation
+2025-01-22 15:50:28,818 - INFO - Info: Contact person's name and phone number: Justin McCarthy, MA Counselor Mobile: 1-617-823-4688 Office: 1-800-392-6450
+Contact person's email address:justin.mccarthy@mass.gov
+Address: 60 E Bacon St., Attleboro, MA 02703.
+
+Client name and phone: Merana Francois;
+2025-01-22 15:50:28,818 - INFO - Comments: Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues.
+2025-01-22 15:50:28,818 - INFO - Assignments saved to assignments.txt
+2025-01-22 15:50:28,818 - INFO - New assignments saved to assignments.txt
+2025-01-22 15:50:28,818 - INFO - 
+Changes detected:
+2025-01-22 15:50:28,818 - INFO - New assignment added: Massachusetts Commission for the Blind - 2/5/2025 - Haitian Creole
+2025-01-22 15:50:28,818 - INFO - New assignment added: AMI Expeditionary Healthcare - 1/24/2025 - Haitian Creole
+2025-01-22 15:50:28,818 - INFO - Assignment removed: New Bedford Public Schools - 1/23/2025 - Haitian Creole
+2025-01-22 15:50:28,818 - INFO - 
+Sending email notification...
+2025-01-22 15:50:28,819 - INFO - Attempting to connect to SMTP server...
+2025-01-22 15:50:28,928 - INFO - Connected to SMTP server, initiating TLS...
+2025-01-22 15:50:29,025 - INFO - Attempting login...
+2025-01-22 15:50:29,428 - INFO - Sending email notification...
+2025-01-22 15:50:30,351 - INFO - Email notification sent successfully
+2025-01-22 15:50:30,389 - INFO - Email notification sent successfully
+2025-01-22 15:50:30,389 - INFO - Previous_assignments.txt updated with new content
+2025-01-22 15:50:30,418 - INFO - Chrome driver cleaned up successfully
 
 === Workflow Logs ===
 === Workflow Run Details ===
-Run Number: 533
-Run Time: Wed Jan 22 15:37:59 UTC 2025
-Run ID: 12911655551
+Run Number: 534
+Run Time: Wed Jan 22 15:50:32 UTC 2025
+Run ID: 12911871085
 
 === Runtime Configuration ===
-LAST_RUN=1737560196
-TARGET_RUN=1737562492
+LAST_RUN=1737560912
+TARGET_RUN=1737562228
 
 === Environment ===
 Python Version: Python 3.11.11
@@ -108,12 +151,12 @@ Node Version: v20.18.1
 Working Directory: /home/runner/work/bridgescrap/bridgescrap
 
 === Runtime Info ===
-LAST_RUN=1737560196
-TARGET_RUN=1737562492
+LAST_RUN=1737560912
+TARGET_RUN=1737562228
 
 === Status ===
-Last run: Wed Jan 22 15:38:00 UTC 2025
+Last run: Wed Jan 22 15:50:34 UTC 2025
 Status: success
-Run number: 533
-Next run: Not before Wed Jan 22 15:48:00 UTC 2025
+Run number: 534
+Next run: Not before Wed Jan 22 16:00:34 UTC 2025
 
