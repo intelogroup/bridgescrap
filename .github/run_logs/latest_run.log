@@ -1,80 +1,206 @@
-=== Latest Run Log (Run ID: 12918863157) ===
-Timestamp: 2025-01-22 23:20:37 UTC
+=== Latest Run Log (Run ID: 12919002518) ===
+Timestamp: 2025-01-22 23:31:52 UTC
 ================================================
 
 === Bridge Logs ===
-2025-01-22 23:19:11,105 - INFO - Starting Bridge Assignment Checker
-2025-01-22 23:19:11,105 - INFO - Running in GitHub Actions environment
-2025-01-22 23:19:11,105 - INFO - Setting up WebDriver...
-2025-01-22 23:19:11,105 - INFO - Using user agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
-2025-01-22 23:19:11,105 - INFO - Using window size: 1829x1042
-2025-01-22 23:19:11,649 - INFO - Detected Chrome version string: snap
-2025-01-22 23:19:11,649 - WARNING - Could not parse major version from: snap
-2025-01-22 23:19:11,803 - INFO - Detected Chrome version string: 131.0.6778.204
-2025-01-22 23:19:11,803 - INFO - Successfully parsed major version: 131
-2025-01-22 23:19:11,803 - INFO - Using detected Chrome version: 131
-2025-01-22 23:19:11,803 - INFO - Using Chrome version: 131
-2025-01-22 23:19:11,803 - INFO - Running in GitHub Actions environment with headless mode
-2025-01-22 23:19:11,803 - INFO - ====== WebDriver manager ======
-2025-01-22 23:19:11,869 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 23:19:11,883 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 23:19:11,893 - INFO - There is no [linux64] chromedriver "131.0.6778.264" for browser google-chrome "131.0.6778" in cache
-2025-01-22 23:19:11,894 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 23:19:11,928 - INFO - WebDriver version 131.0.6778.264 selected
-2025-01-22 23:19:11,930 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
-2025-01-22 23:19:11,930 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
-2025-01-22 23:19:11,952 - INFO - Driver downloading response is 200
-2025-01-22 23:19:12,005 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-22 23:19:12,129 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264]
-2025-01-22 23:19:12,136 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264/chromedriver-linux64/chromedriver
-2025-01-22 23:19:12,911 - INFO - WebDriver setup completed successfully
-2025-01-22 23:19:12,911 - INFO - Attempting to login...
-2025-01-22 23:19:13,664 - INFO - Adding random delay of 2.66 seconds
-2025-01-22 23:19:16,326 - INFO - Adding initial delay of 1.25 seconds before looking for username field
-2025-01-22 23:19:17,575 - INFO - Waiting up to 15.3 seconds for username field
-2025-01-22 23:19:17,584 - INFO - Successfully found username field
-2025-01-22 23:19:17,584 - INFO - Adding post-delay of 1.96 seconds
-2025-01-22 23:19:19,549 - INFO - Adding random delay of 2.53 seconds
-2025-01-22 23:19:22,078 - INFO - Adding initial delay of 2.93 seconds before looking for password field
-2025-01-22 23:19:25,004 - INFO - Waiting up to 16.7 seconds for password field
-2025-01-22 23:19:25,014 - INFO - Successfully found password field
-2025-01-22 23:19:25,014 - INFO - Adding post-delay of 2.10 seconds
-2025-01-22 23:19:27,111 - INFO - Adding random delay of 3.51 seconds
-2025-01-22 23:19:30,626 - INFO - Adding initial delay of 1.54 seconds before looking for submit button
-2025-01-22 23:19:32,170 - INFO - Waiting up to 15.3 seconds for submit button
-2025-01-22 23:19:32,179 - INFO - Successfully found submit button
-2025-01-22 23:19:32,179 - INFO - Adding post-delay of 1.38 seconds
-2025-01-22 23:19:33,629 - INFO - Adding random delay of 3.50 seconds
-2025-01-22 23:19:37,189 - INFO - Adding random delay of 4.02 seconds
-2025-01-22 23:19:41,212 - INFO - Submitting login form...
-2025-01-22 23:19:41,523 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
-2025-01-22 23:19:41,523 - INFO - Navigating to assignments page...
-2025-01-22 23:19:51,850 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
-2025-01-22 23:19:51,850 - INFO - Adding random delay of 4.30 seconds
-2025-01-22 23:19:56,164 - INFO - Found table using generic table tag
-2025-01-22 23:19:56,170 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
-		<tbody><tr class="grid_table_header">
-			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="c
-2025-01-22 23:20:06,233 - INFO - Table text preview: Customer Service
-Date / Time Language Type of service Assignment info Comments Action
-2025-01-22 23:20:06,246 - INFO - Found 1 total rows
-2025-01-22 23:20:06,250 - INFO - Row 0 HTML: <tr class="grid_table_header">
-			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="col">Comments</th><th class="grid_table_header" scope="col">Action</th>
-		</tr>
-2025-01-22 23:20:16,313 - INFO - Found 0 data rows after filtering headers
-2025-01-22 23:20:16,313 - INFO - Found 0 assignments
-2025-01-22 23:20:16,313 - WARNING - No assignments found
-2025-01-22 23:20:16,313 - INFO - Chrome driver cleaned up successfully
+2025-01-22 23:30:34,250 - INFO - Starting Bridge Assignment Checker
+2025-01-22 23:30:34,250 - INFO - Running in GitHub Actions environment
+2025-01-22 23:30:34,250 - INFO - Setting up WebDriver...
+2025-01-22 23:30:34,250 - INFO - Using user agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+2025-01-22 23:30:34,251 - INFO - Using window size: 1911x1064
+2025-01-22 23:30:34,785 - INFO - Detected Chrome version string: snap
+2025-01-22 23:30:34,785 - WARNING - Could not parse major version from: snap
+2025-01-22 23:30:37,235 - INFO - Detected Chrome version string: 131.0.6778.204
+2025-01-22 23:30:37,235 - INFO - Successfully parsed major version: 131
+2025-01-22 23:30:37,235 - INFO - Using detected Chrome version: 131
+2025-01-22 23:30:37,235 - INFO - Using Chrome version: 131
+2025-01-22 23:30:37,235 - INFO - Running in GitHub Actions environment with headless mode
+2025-01-22 23:30:37,235 - INFO - ====== WebDriver manager ======
+2025-01-22 23:30:37,300 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 23:30:37,329 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 23:30:37,341 - INFO - There is no [linux64] chromedriver "131.0.6778.264" for browser google-chrome "131.0.6778" in cache
+2025-01-22 23:30:37,341 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 23:30:37,386 - INFO - WebDriver version 131.0.6778.264 selected
+2025-01-22 23:30:37,387 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
+2025-01-22 23:30:37,387 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.264/linux64/chromedriver-linux64.zip
+2025-01-22 23:30:37,403 - INFO - Driver downloading response is 200
+2025-01-22 23:30:37,450 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-22 23:30:37,573 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264]
+2025-01-22 23:30:37,581 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/131.0.6778.264/chromedriver-linux64/chromedriver
+2025-01-22 23:31:00,141 - INFO - WebDriver setup completed successfully
+2025-01-22 23:31:00,141 - INFO - Attempting to login...
+2025-01-22 23:31:06,290 - INFO - Adding random delay of 3.26 seconds
+2025-01-22 23:31:09,554 - INFO - Adding initial delay of 2.05 seconds before looking for username field
+2025-01-22 23:31:11,608 - INFO - Waiting up to 15.7 seconds for username field
+2025-01-22 23:31:11,618 - INFO - Successfully found username field
+2025-01-22 23:31:11,618 - INFO - Adding post-delay of 2.51 seconds
+2025-01-22 23:31:14,128 - INFO - Adding random delay of 3.60 seconds
+2025-01-22 23:31:17,725 - INFO - Adding initial delay of 1.16 seconds before looking for password field
+2025-01-22 23:31:18,882 - INFO - Waiting up to 16.0 seconds for password field
+2025-01-22 23:31:18,891 - INFO - Successfully found password field
+2025-01-22 23:31:18,891 - INFO - Adding post-delay of 2.01 seconds
+2025-01-22 23:31:20,905 - INFO - Adding random delay of 3.91 seconds
+2025-01-22 23:31:24,815 - INFO - Adding initial delay of 2.45 seconds before looking for submit button
+2025-01-22 23:31:27,262 - INFO - Waiting up to 15.5 seconds for submit button
+2025-01-22 23:31:27,271 - INFO - Successfully found submit button
+2025-01-22 23:31:27,271 - INFO - Adding post-delay of 1.46 seconds
+2025-01-22 23:31:28,850 - INFO - Adding random delay of 3.53 seconds
+2025-01-22 23:31:32,442 - INFO - Adding random delay of 3.95 seconds
+2025-01-22 23:31:36,396 - INFO - Submitting login form...
+2025-01-22 23:31:36,945 - ERROR - Login failed. Current URL: https://lbridge.com/Login
+2025-01-22 23:31:36,949 - ERROR - Page source:
+<html><head><title>
+	Notifications - Language Bridge, LLC
+</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="keywords" content="Translation service, Interpretation service, Translation, Interpretation, Translator, Interpreter, language translation services, professional, Medical translation service, medical translation, Massachusetts, Western, MA, Western Mass"><meta name="description" content="We offer 24/7 professional interpretation and translation services in order to provide equal access to health care and business services for clients with limited English skills. Click here for more information."><meta name="AUTHOR" content="Created by DSoftware Solution"><meta name="Resource-Type" content="document"><meta name="robots" content="ALL"><meta name="document-class" content="Completed"><meta name="document-distribution" content="Global"><meta name="cache-control" content="Public"><meta name="language" content="English"><meta name="document-rights" content="Copyrighted Work"><meta name="revisit-after" content="30 days"><meta name="Abstract" content="We offer 24/7 professional interpretation and translation services in order to provide equal access to health care and business services for clients with limited English skills. Click here for more information."><link rel="stylesheet" type="text/css" href="../Content/default.css"><link rel="stylesheet" type="text/css" href="../Content/InterpretersStyle.css">
+</head>
+<body onload="window.status='Language Bridge, LLC - Interpreters'">
+    <form method="post" action="./notifications" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/s4OBkfjrYH8ndHzaiuHoNzqa1uT6uF4lFfDO0/5ERStHhnxAflww+W0vJGoc4To7RIq09wsRiE3nGCWjR07hxBxv8n23Sbh2aeHexT0rfkwQjWY5wrEOYLYm/YvZ7/cPO2Io9bIv4+00lR/2GVv4L5lrqi1NFv/v9vevS9n9d1zABqZdWdv8RXikdLpCPaLV1nOxJSNSKzmsJVn6+C/n3/RYUYlIWsqUmAGR8PEvxd7mXefgsJ76FM2ig0Te0SlG4k3MkfYGU/p+wtsZexjpG/puoEQjiDQ1huIusOwnP9TgxyjqjapEgdIGUtY+mNYXhDR46YgSoDZx13cG4uDP+N18LnX0acSkJ7IYMRurN2naK0RWG0Jpr579SfUusKp6kAOOBYV837wKy2fgZRf/S59ok3bxhDBVu1WkH/U/6uNJDrX6vKe2cDQIjmLyxHDJXie6MTu2/TFW9ZHLYGevTdYdH9mKeMG01fbbrtn5Yg8sFjs31KR/a1p8zOd+ofCBpjW/DD/0S+03OldeaAmjX1j6v2DVgHjtsrAOZHMeP2mj8Y5eZc1/32hCt/dPIYtH36ck3INTlw/LF8DylrqHQFJicQ=">
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="5D4EEE5B">
+</div>
+         <div class="conteiner header-content">
+            <div id="menu-top">
+                <ul id="nav-bar-header">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li><a href="../Index.aspx">413-478-4342</a></li>
+                </ul>
+            </div>
+        
+            <header>
+                   <div class="nav-header">
+                        <a href="../index.aspx"><img id="logo" src="../images/lb-logo_v8.png" alt="Language Bridge, LLC"></a>
+                        <h3><span>Language</span> Bridge, LLC <br><span id="sm-title">Interpretation &amp; Translation Services</span></h3>                            
+                   </div>
+                   <div class="nav-header-menu"> 
+                        <input type="checkbox" id="menu">
+                        <label id="labelmenu" for="menu">☰</label>                      
+                        <div class="dropdown">
+                              <div class="dropbtn" id="btnnotifications">
+                                 <a href="notifications.aspx">Notifications</a>
+                              </div>
+                         </div>      
+                                               
+                         <div class="dropdown">
+                              <input type="checkbox" id="assignments">
+                              <label for="assignments" id="lblassignments">Assignments</label>
+                              <button class="dropbtn">Assignments</button>
+                                <div class="dropdown-content">
+                                     <a href="open_assignments.aspx">Open</a>
+                                     <a href="accepted_assignments.aspx">Accepted</a>
+                                     <a href="assignments_history.aspx">History</a>
+                                </div>
+                        </div>
+                        <div class="dropdown" id="drpCalendar">
+                              <div class="dropbtn" id="btncalendar">
+                                    <a href="calendar.aspx">Calendar</a>  
+                                </div>
+                        </div> 
+                        <div class="dropdown">
+                              <input type="checkbox" id="forms">
+                              <label for="forms" id="lblforms">Forms</label>
+                              <button class="dropbtn">Forms</button>
+                                <div class="dropdown-content">
+                                    <a href="authorization_forms.aspx">Assignments Authorization</a>
+                                    <a href="immunization_record_form.aspx">Immunization Record</a>
+                                    <a href="medical_terminology_test.aspx">Medical Terminology Test</a>
+                                </div>
+                        </div>
+
+                         <div class="dropdown" id="drpLogoff">
+                              <div class="dropbtn" id="btnlogoff">
+                                    <a href="logoff.aspx">Log off</a>  
+                              </div>
+                        </div>  
+                    </div>     
+            </header>  
+         </div>
+
+        <div class="lbinfo_intr">
+            <span id="lblAdminName"><b>Interpreter:</b> Kalinov Dameus</span>
+        </div>
+
+        <div class="container body-content">
+            
+     <section class="lbinfo">
+        <h3 class="title">Notifications</h3>
+           
+        <p><span id="InterpretersContent_lblMissingDocs" style="color:Red;"><b>Missing Documents:</b> <br>Immunization Record (Please see required Immunizations under 'FORMS')<br>COVID Card<br>Flu vaccination<br><br>Please send missing documents to our secure email at <a href="mailto:infolb@lbridge.com" target="_blank">infolb@lbridge.com</a></span></p>
+
+        <p><span class="fbold">The Interpreter has a choice of canceling the request, according to the following rules:</span></p>
+        
+        <ul class="list">
+            <li>If you are not able to provide service for the appointment that has been assigned to you, please post this request back to the screen (in more than 72 hours in advance).</li>
+            <li>If you are not able to provide your service for the appointment that has been assigned to you in less than 72 hours in advance, please call Language Bridge, LLC 
+                    at (413) 478-4342 as soon as possible and let us know about the changes. Please remember we are available 24 hours a day, 7 days a week.</li>
+            <li>If you fail to provide the accepted assignment (not attending the appointment or arriving late) you will be charged $300.00 which shall be immediately paid.</li>
+            <li>Interpreter should finish your assignment online within 48 hours after it is done. If you do not have an access to a computer, please call us at 413-478-4342 and we will 
+                finish the assignment for you. In the case your assignment is not DONE (on our website) within 48 hours and we have not heard from you, your payment for 
+                the assignment will be reduced by 50%. Any assignments submitted online 5 days after the service has been performed will not be paid. Also, the service performed 
+                will not be paid in a case of unsatisfactory performance. Unsatisfactory performance may include, but is not limited to failure to appear, arriving late, 
+                inappropriate dress, unprofessional demeanor or attitude, or lack of qualifications for the requested assignment.</li>
+        </ul>
+     </section>
+
+        </div>
+
+         <div class="container footer-content">
+            <footer>
+                 <div class="features-grid-container">
+		            <ul class="footer-menu">
+			            <li>
+                            <span class="footer-title">Review</span>
+                            <a href="notifications.aspx">Notifications</a>
+                        </li>
+                        <li>
+                            <span class="footer-title">Assignments</span>
+                            <a href="open_assignments.aspx">Open</a>
+                            <a href="accepted_assignments.aspx">Accepted</a>
+                            <a href="assignments_history.aspx">History</a>
+                            <a href="calendar.aspx">Calendar</a>
+                        </li>
+			            <li>
+                            <span class="footer-title">Forms</span>
+                            <a href="authorization_forms.aspx">Assignments Authorization</a>
+                            <a href="immunization_record_form.aspx">Immunization Record</a>
+                            <a href="medical_terminology_test.aspx">Medical Terminology Test</a>
+                        </li>
+                        
+           
+		            </ul>
+                </div>
+               <p></p>
+		        <p>Copyright © 2003-<script type="text/javascript">
+				            var now = new Date();
+				            function fourdigits(number)	{
+				            return (number < 1000) ? number + 1900 : number;}
+				            today = (fourdigits(now.getYear()));
+				            document.write(today);
+			            </script>2025 by Language Bridge, LLC. All Rights Reserved.</p>
+	        </footer>
+        </div>
+    </form>
+
+
+
+</body></html>
+2025-01-22 23:31:36,964 - ERROR - Login failed
 
 === Workflow Logs ===
 === Workflow Run Details ===
-Run Number: 553
-Run Time: Wed Jan 22 23:20:17 UTC 2025
-Run ID: 12918863157
+Run Number: 554
+Run Time: Wed Jan 22 23:31:37 UTC 2025
+Run ID: 12919002518
 
 === Runtime Configuration ===
-LAST_RUN=1737587950
-TARGET_RUN=1737589359
+LAST_RUN=1737588631
+TARGET_RUN=1737590922
 
 === Environment ===
 Python Version: Python 3.11.11
@@ -82,12 +208,12 @@ Node Version: v20.18.1
 Working Directory: /home/runner/work/bridgescrap/bridgescrap
 
 === Runtime Info ===
-LAST_RUN=1737587950
-TARGET_RUN=1737589359
+LAST_RUN=1737588631
+TARGET_RUN=1737590922
 
 === Status ===
-Last run: Wed Jan 22 23:20:20 UTC 2025
-Status: success
-Run number: 553
-Next run: Not before Wed Jan 22 23:30:20 UTC 2025
+Last run: Wed Jan 22 23:31:38 UTC 2025
+Status: failure
+Run number: 554
+Next run: Not before Wed Jan 22 23:41:38 UTC 2025
 
