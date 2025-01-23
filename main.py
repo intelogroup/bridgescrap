@@ -240,7 +240,7 @@ def main():
                         logger.info(change)
                     logger.info("\nSending email notification...")
                     
-                    if send_notification(assignments):
+                    if send_notification(changes, assignments):
                         logger.info("Email notification sent successfully")
                         # Update Previous_assignments.txt with new content
                         try:
