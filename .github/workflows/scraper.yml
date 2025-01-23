@@ -88,8 +88,25 @@ jobs:
     - name: Create data directory
       run: mkdir -p data
 
+    - name: Check operating hours
+      id: check_hours
+      run: |
+        # Get current time in EST/NY timezone
+        HOUR_EST=$(TZ="America/New_York" date +%H)
+        HOUR_NUM=$(echo $HOUR_EST | sed 's/^0//')
+        
+        # Check if current hour is between 7 AM and 7 PM EST
+        if [ $HOUR_NUM -ge 7 ] && [ $HOUR_NUM -lt 19 ]; then
+          echo "Current time $HOUR_EST:00 EST is within operating hours (7 AM - 7 PM EST)"
+          echo "should_run=true" >> $GITHUB_OUTPUT
+        else
+          echo "Current time $HOUR_EST:00 EST is outside operating hours (7 AM - 7 PM EST), skipping run"
+          echo "should_run=false" >> $GITHUB_OUTPUT
+        fi
+
     - name: Check for maintenance window
       id: maintenance
+      if: steps.check_hours.outputs.should_run == 'true'
       run: |
         # Skip during maintenance hours (e.g., 3-4 AM UTC)
         HOUR=$(date +%H)
@@ -187,7 +204,7 @@ jobs:
 
     - name: Random interval check
       id: random_check
-      if: steps.maintenance.outputs.should_run == 'true'
+      if: steps.maintenance.outputs.should_run == 'true' && steps.check_hours.outputs.should_run == 'true'
       run: |
         # Always run on workflow_dispatch
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
