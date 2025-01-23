@@ -129,8 +129,8 @@ def compare_assignments(prev_assignments, curr_assignments):
     def get_assignment_key(assignment):
         return (
             assignment.get('customer', ''),
-            assignment.get('date_time', ''),
-            assignment.get('language', '')
+            assignment.get('language', ''),
+            assignment.get('location', '')  # Using location instead of date_time for content-based matching
         )
     
     prev_keys = {get_assignment_key(a) for a in prev_assignments}
@@ -150,7 +150,7 @@ def compare_assignments(prev_assignments, curr_assignments):
     
     # Compare assignments that exist in both lists
     common_keys = prev_keys & curr_keys
-    important_fields = ['customer', 'date_time', 'language', 'service_type', 'location', 
+    important_fields = ['customer', 'language', 'service_type', 'location', 
                        'client_name_and_phone', 'contact_person\'s_email_address']
     
     for key in common_keys:
