@@ -52,9 +52,8 @@ def save_assignments(assignments, filename="assignments.txt"):
         formatted_assignments = []
         for assignment in assignments:
             formatted = {}
-            # Copy basic fields
+            # Copy only non-timestamp fields
             formatted['customer'] = assignment.get('customer', '')
-            formatted['date_time'] = assignment.get('date_time', '')
             formatted['language'] = assignment.get('language', '')
             formatted['service_type'] = assignment.get('service_type', '')
             
@@ -78,7 +77,7 @@ def save_assignments(assignments, filename="assignments.txt"):
         
         # Write formatted assignments to file
         with open(filename, 'w', encoding='utf-8') as f:
-            f.write(f"Bridge Assignments Report - {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n")
+            f.write("Bridge Assignments Report\n\n")
             for i, assignment in enumerate(formatted_assignments, 1):
                 f.write(f"Assignment #{i}:\n")
                 f.write("-" * 30 + "\n")
@@ -122,10 +121,15 @@ def parse_assignments(content):
     return assignments_list
 
 def compare_assignments(prev_assignments, curr_assignments):
-    """Compare assignments with detailed change tracking"""
+    """Compare assignments with detailed change tracking, ignoring timestamps"""
     changes = []
     
-    # Create sets of assignment identifiers (using customer, date_time, and language as unique identifiers)
+    # Filter out any timestamp fields from assignments before comparison
+    def remove_timestamps(assignment):
+        return {k: v for k, v in assignment.items() if not any(time_field in k.lower() for time_field in ['date', 'time'])}
+    
+    prev_assignments = [remove_timestamps(a) for a in prev_assignments]
+    curr_assignments = [remove_timestamps(a) for a in curr_assignments]
     def get_assignment_key(assignment):
         return (
             assignment.get('customer', ''),

@@ -1,17 +1,25 @@
-Bridge Assignments Report - 2025-01-17 21:59
+Bridge Assignments Report
 
 Assignment #1:
 ------------------------------
-Customer: New Bedford Public Schools
-Date_Time: 1/23/2025
-8:00 AM
-Language: Haitian Creole
+Address: BMC 725 NORTH STREET PITTSFIELD, MA 01201
+Client_Name_And_Phone: AMINATA MBODJ; 4134472296
+Comments: DOWNLOAD BMC form from your page, get BMC badge & sign in register book @ office. TAKE PICTURE of COMPLETED FORM TO UPLOAD ONLINE LATER, drop off form & BMC badge @ 'blue box' outside the office. If over 2hrs, call LBridge 413.478.4342
+Contact_Person'S_Email_Address: kfrench@bhs1.org
+Contact_Person_Name_And_Phone: RADIOLOGY - Berkshire Medical Center
+Customer: Berkshire Medical Center
+Language: French
+Location: MAIN FLOOR
 Service_Type: In-person Interpretation
-Info: Contact person's name and phone number: Colleen Arruda 508-997-4511 ext 30506
-Contact person's email address:carruda@newbedforschools.org
-Address: 225 Hathaway Blvd New Bedford MA 02740
 
-Location: Main office
-Client name and phone: n/a;
-Comments: Parent meeting 8:00 am - 8:50 am; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues.
-
+Assignment #2:
+------------------------------
+Address: Carney School 247 Elm St. New Bedford Ma. 02740
+Client_Name_And_Phone: UN;
+Comments: This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues.
+Contact_Person'S_Email_Address: fnieves@newbedfordschools.org
+Contact_Person_Name_And_Phone: Mary mholloway@newbedfordschools.org
+Customer: New Bedford Public Schools SPED
+Language: French
+Location: Main Entrance
+Service_Type: In-person Interpretation
