@@ -325,9 +325,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: assignments-${{ github.run_number }}
-        path: |
-          assignments.txt
-          Previous_assignments.txt
+        path: Previous_assignments.txt
         retention-days: 90
         compression-level: 9
         overwrite: true

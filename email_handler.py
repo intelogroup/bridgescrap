@@ -31,13 +31,12 @@ def send_notification(changes, assignments):
         
         body += "\n\nCurrent Assignments:\n"
         for i, assignment in enumerate(assignments, 1):
-            body += (f"\nAssignment #{i}:\n"
-                    f"Customer: {assignment.get('customer', 'N/A')}\n"
-                    f"Language: {assignment.get('language', 'N/A')}\n"
-                    f"Service Type: {assignment.get('service_type', 'N/A')}\n"
-                    f"Location: {assignment.get('location', 'N/A')}\n"
-                    f"Info: {assignment.get('info', 'N/A')}\n"
-                    f"Comments: {assignment.get('comments', 'N/A')}\n")
+            body += f"\nAssignment #{i}:\n"
+            # Add all non-empty fields in a sorted order for consistency
+            for key, value in sorted(assignment.items()):
+                if value:  # Only include non-empty values
+                    body += f"{key.title()}: {value}\n"
+            body += "\n"
 
         msg = MIMEText(body)
         msg['Subject'] = subject

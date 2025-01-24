@@ -45,40 +45,37 @@ def cleanup_driver(driver):
         logger.error(f"Error during driver cleanup: {str(e)}")
         logger.error(traceback.format_exc())
 
-def save_assignments(assignments, filename="assignments.txt"):
+def format_assignment(assignment):
+    """Format a single assignment for consistent structure"""
+    formatted = {}
+    formatted['customer'] = assignment.get('customer', '')
+    formatted['language'] = assignment.get('language', '')
+    formatted['service_type'] = assignment.get('service_type', '')
+    
+    info = assignment.get('info', '')
+    for line in info.split('\n'):
+        line = line.strip()
+        if 'Contact person\'s name and phone number:' in line:
+            formatted['contact_person_name_and_phone'] = line.split(':', 1)[1].strip()
+        elif 'Contact person\'s email address:' in line:
+            formatted['contact_person\'s_email_address'] = line.split(':', 1)[1].strip()
+        elif 'Address:' in line:
+            formatted['address'] = line.split(':', 1)[1].strip()
+        elif 'Location:' in line:
+            formatted['location'] = line.split(':', 1)[1].strip()
+        elif 'Client name and phone:' in line:
+            formatted['client_name_and_phone'] = line.split(':', 1)[1].strip()
+    
+    formatted['comments'] = assignment.get('comments', '')
+    return formatted
+
+def save_assignments(assignments, filename="Previous_assignments.txt"):
     """Save assignments to a file with consistent formatting"""
     try:
-        # Extract location and other details from info field
-        formatted_assignments = []
-        for assignment in assignments:
-            formatted = {}
-            # Copy only non-timestamp fields
-            formatted['customer'] = assignment.get('customer', '')
-            formatted['language'] = assignment.get('language', '')
-            formatted['service_type'] = assignment.get('service_type', '')
-            
-            # Parse info field
-            info = assignment.get('info', '')
-            for line in info.split('\n'):
-                line = line.strip()
-                if 'Contact person\'s name and phone number:' in line:
-                    formatted['contact_person_name_and_phone'] = line.split(':', 1)[1].strip()
-                elif 'Contact person\'s email address:' in line:
-                    formatted['contact_person\'s_email_address'] = line.split(':', 1)[1].strip()
-                elif 'Address:' in line:
-                    formatted['address'] = line.split(':', 1)[1].strip()
-                elif 'Location:' in line:
-                    formatted['location'] = line.split(':', 1)[1].strip()
-                elif 'Client name and phone:' in line:
-                    formatted['client_name_and_phone'] = line.split(':', 1)[1].strip()
-            
-            formatted['comments'] = assignment.get('comments', '')
-            formatted_assignments.append(formatted)
-        
         # Write formatted assignments to file
         with open(filename, 'w', encoding='utf-8') as f:
             f.write("Bridge Assignments Report\n\n")
-            for i, assignment in enumerate(formatted_assignments, 1):
+            for i, assignment in enumerate(assignments, 1):
                 f.write(f"Assignment #{i}:\n")
                 f.write("-" * 30 + "\n")
                 for key, value in sorted(assignment.items()):  # Sort keys for consistent order
@@ -210,33 +207,23 @@ def main():
                     for key, value in assignment.items():
                         logger.info(f"{key.title()}: {value}")
                 
-                # First save the new assignments
-                save_assignments(assignments)
-                logger.info("New assignments saved to assignments.txt")
-
                 # Load previous assignments
                 previous_assignments_content = ""
+                prev_assignments = []
                 if os.path.exists("Previous_assignments.txt"):
                     try:
                         with open("Previous_assignments.txt", 'r', encoding='utf-8') as f:
                             previous_assignments_content = f.read()
+                            prev_assignments = parse_assignments(previous_assignments_content)
                     except Exception as e:
                         logger.error(f"Error reading Previous_assignments.txt: {str(e)}")
                         logger.error(traceback.format_exc())
 
-                # Load current assignments
-                current_assignments_content = ""
-                try:
-                    with open("assignments.txt", 'r', encoding='utf-8') as f:
-                        current_assignments_content = f.read()
-                except Exception as e:
-                    logger.error(f"Error reading assignments.txt: {str(e)}")
-                    logger.error(traceback.format_exc())
+                # Format current assignments for comparison
+                formatted_assignments = [format_assignment(assignment) for assignment in assignments]
 
-                prev_assignments = parse_assignments(previous_assignments_content)
-                curr_assignments = parse_assignments(current_assignments_content)
-                
-                has_changes, changes = compare_assignments(prev_assignments, curr_assignments)
+                # Compare current assignments with previous ones
+                has_changes, changes = compare_assignments(prev_assignments, formatted_assignments)
                 
                 if has_changes:
                     logger.info("\nChanges detected:")
@@ -244,16 +231,13 @@ def main():
                         logger.info(change)
                     logger.info("\nSending email notification...")
                     
-                    if send_notification(changes, assignments):
+                    if send_notification(changes, formatted_assignments):
                         logger.info("Email notification sent successfully")
-                        # Update Previous_assignments.txt with new content
-                        try:
-                            with open("Previous_assignments.txt", 'w', encoding='utf-8') as f:
-                                f.write(current_assignments_content)
+                        # Save new assignments to Previous_assignments.txt
+                        if save_assignments(formatted_assignments):
                             logger.info("Previous_assignments.txt updated with new content")
-                        except Exception as e:
-                            logger.error(f"Error updating Previous_assignments.txt: {str(e)}")
-                            logger.error(traceback.format_exc())
+                        else:
+                            logger.error("Failed to update Previous_assignments.txt")
                     else:
                         logger.error("Failed to send email notification")
                 else:
