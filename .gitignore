@@ -2,6 +2,4 @@ __pycache__/
 *.pyc
 .env
 bridge_logs/
-data/
-test/
-assignments.txt
+
