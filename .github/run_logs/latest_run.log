@@ -1,69 +1,69 @@
-=== Latest Run Log (Run ID: 12953235154) ===
-Timestamp: 2025-01-24 16:33:59 UTC
+=== Latest Run Log (Run ID: 12953702456) ===
+Timestamp: 2025-01-24 16:40:00 UTC
 ================================================
 
 === Bridge Logs ===
-2025-01-24 16:32:06,121 - INFO - Starting Bridge Assignment Checker
-2025-01-24 16:32:06,121 - INFO - Running in GitHub Actions environment
-2025-01-24 16:32:06,121 - INFO - Setting up WebDriver...
-2025-01-24 16:32:06,121 - INFO - Using user agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36
-2025-01-24 16:32:06,121 - INFO - Using window size: 1897x1010
-2025-01-24 16:32:06,699 - INFO - Detected Chrome version string: snap
-2025-01-24 16:32:06,699 - WARNING - Could not parse major version from: snap
-2025-01-24 16:32:06,864 - INFO - Detected Chrome version string: 132.0.6834.83
-2025-01-24 16:32:06,865 - INFO - Successfully parsed major version: 132
-2025-01-24 16:32:06,865 - INFO - Using detected Chrome version: 132
-2025-01-24 16:32:06,865 - INFO - Using Chrome version: 132
-2025-01-24 16:32:06,865 - INFO - Running in GitHub Actions environment with headless mode
-2025-01-24 16:32:06,865 - INFO - ====== WebDriver manager ======
-2025-01-24 16:32:06,932 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-24 16:32:07,989 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-24 16:32:08,001 - INFO - There is no [linux64] chromedriver "132.0.6834.110" for browser google-chrome "132.0.6834" in cache
-2025-01-24 16:32:08,001 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-24 16:32:08,036 - INFO - WebDriver version 132.0.6834.110 selected
-2025-01-24 16:32:08,038 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/linux64/chromedriver-linux64.zip
-2025-01-24 16:32:08,038 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/linux64/chromedriver-linux64.zip
-2025-01-24 16:32:08,077 - INFO - Driver downloading response is 200
-2025-01-24 16:32:08,111 - INFO - Get LATEST chromedriver version for google-chrome
-2025-01-24 16:32:08,226 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.110]
-2025-01-24 16:32:08,233 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.110/chromedriver-linux64/chromedriver
-2025-01-24 16:32:09,639 - INFO - WebDriver setup completed successfully
-2025-01-24 16:32:09,639 - INFO - Attempting to login...
-2025-01-24 16:32:15,000 - INFO - Adding random delay of 2.11 seconds
-2025-01-24 16:32:17,114 - INFO - Adding initial delay of 1.91 seconds before looking for username field
-2025-01-24 16:32:19,029 - INFO - Waiting up to 16.7 seconds for username field
-2025-01-24 16:32:19,039 - INFO - Successfully found username field
-2025-01-24 16:32:19,039 - INFO - Adding post-delay of 1.19 seconds
-2025-01-24 16:32:20,231 - INFO - Adding random delay of 3.62 seconds
-2025-01-24 16:32:23,853 - INFO - Adding initial delay of 2.57 seconds before looking for password field
-2025-01-24 16:32:26,418 - INFO - Waiting up to 16.3 seconds for password field
-2025-01-24 16:32:26,427 - INFO - Successfully found password field
-2025-01-24 16:32:26,427 - INFO - Adding post-delay of 2.07 seconds
-2025-01-24 16:32:28,496 - INFO - Adding random delay of 2.10 seconds
-2025-01-24 16:32:30,595 - INFO - Adding initial delay of 2.92 seconds before looking for submit button
-2025-01-24 16:32:33,519 - INFO - Waiting up to 16.4 seconds for submit button
-2025-01-24 16:32:33,528 - INFO - Successfully found submit button
-2025-01-24 16:32:33,529 - INFO - Adding post-delay of 1.68 seconds
-2025-01-24 16:32:35,328 - INFO - Adding random delay of 2.14 seconds
-2025-01-24 16:32:37,521 - INFO - Adding random delay of 2.78 seconds
-2025-01-24 16:32:40,299 - INFO - Submitting login form...
-2025-01-24 16:32:40,636 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
-2025-01-24 16:32:40,636 - INFO - Navigating to assignments page...
-2025-01-24 16:32:51,015 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
-2025-01-24 16:32:51,015 - INFO - Adding random delay of 4.22 seconds
-2025-01-24 16:32:55,248 - INFO - Found table using generic table tag
-2025-01-24 16:32:55,253 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
+2025-01-24 16:38:11,766 - INFO - Starting Bridge Assignment Checker
+2025-01-24 16:38:11,766 - INFO - Running in GitHub Actions environment
+2025-01-24 16:38:11,766 - INFO - Setting up WebDriver...
+2025-01-24 16:38:11,766 - INFO - Using user agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+2025-01-24 16:38:11,766 - INFO - Using window size: 1878x1034
+2025-01-24 16:38:12,267 - INFO - Detected Chrome version string: snap
+2025-01-24 16:38:12,268 - WARNING - Could not parse major version from: snap
+2025-01-24 16:38:12,386 - INFO - Detected Chrome version string: 132.0.6834.83
+2025-01-24 16:38:12,387 - INFO - Successfully parsed major version: 132
+2025-01-24 16:38:12,387 - INFO - Using detected Chrome version: 132
+2025-01-24 16:38:12,387 - INFO - Using Chrome version: 132
+2025-01-24 16:38:12,387 - INFO - Running in GitHub Actions environment with headless mode
+2025-01-24 16:38:12,387 - INFO - ====== WebDriver manager ======
+2025-01-24 16:38:12,452 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 16:38:12,494 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 16:38:12,504 - INFO - There is no [linux64] chromedriver "132.0.6834.110" for browser google-chrome "132.0.6834" in cache
+2025-01-24 16:38:12,504 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 16:38:12,544 - INFO - WebDriver version 132.0.6834.110 selected
+2025-01-24 16:38:12,545 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/linux64/chromedriver-linux64.zip
+2025-01-24 16:38:12,546 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/linux64/chromedriver-linux64.zip
+2025-01-24 16:38:12,560 - INFO - Driver downloading response is 200
+2025-01-24 16:38:12,608 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 16:38:12,722 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.110]
+2025-01-24 16:38:12,729 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.110/chromedriver-linux64/chromedriver
+2025-01-24 16:38:13,499 - INFO - WebDriver setup completed successfully
+2025-01-24 16:38:13,499 - INFO - Attempting to login...
+2025-01-24 16:38:14,664 - INFO - Adding random delay of 4.92 seconds
+2025-01-24 16:38:19,582 - INFO - Adding initial delay of 2.70 seconds before looking for username field
+2025-01-24 16:38:22,283 - INFO - Waiting up to 16.0 seconds for username field
+2025-01-24 16:38:22,293 - INFO - Successfully found username field
+2025-01-24 16:38:22,293 - INFO - Adding post-delay of 2.40 seconds
+2025-01-24 16:38:24,697 - INFO - Adding random delay of 4.87 seconds
+2025-01-24 16:38:29,567 - INFO - Adding initial delay of 2.36 seconds before looking for password field
+2025-01-24 16:38:31,930 - INFO - Waiting up to 16.7 seconds for password field
+2025-01-24 16:38:31,940 - INFO - Successfully found password field
+2025-01-24 16:38:31,940 - INFO - Adding post-delay of 1.84 seconds
+2025-01-24 16:38:33,780 - INFO - Adding random delay of 2.18 seconds
+2025-01-24 16:38:35,957 - INFO - Adding initial delay of 1.58 seconds before looking for submit button
+2025-01-24 16:38:37,542 - INFO - Waiting up to 16.4 seconds for submit button
+2025-01-24 16:38:37,551 - INFO - Successfully found submit button
+2025-01-24 16:38:37,551 - INFO - Adding post-delay of 1.10 seconds
+2025-01-24 16:38:38,732 - INFO - Adding random delay of 4.88 seconds
+2025-01-24 16:38:43,666 - INFO - Adding random delay of 4.54 seconds
+2025-01-24 16:38:48,205 - INFO - Submitting login form...
+2025-01-24 16:38:48,623 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
+2025-01-24 16:38:48,623 - INFO - Navigating to assignments page...
+2025-01-24 16:38:59,077 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
+2025-01-24 16:38:59,077 - INFO - Adding random delay of 3.61 seconds
+2025-01-24 16:39:02,695 - INFO - Found table using generic table tag
+2025-01-24 16:39:02,700 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
 		<tbody><tr class="grid_table_header">
 			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="c
-2025-01-24 16:33:05,273 - INFO - Table text preview: Customer Service
+2025-01-24 16:39:12,765 - INFO - Table text preview: Customer Service
 Date / Time Language Type of service Assignment info Comments Action
 Berkshire Medical Center 2/4/2025
 9:45 AM French In-person Interpretation Contact person's name and phone number: 
-2025-01-24 16:33:05,286 - INFO - Found 3 total rows
-2025-01-24 16:33:05,291 - INFO - Row 0 HTML: <tr class="grid_table_header">
+2025-01-24 16:39:12,780 - INFO - Found 3 total rows
+2025-01-24 16:39:12,784 - INFO - Row 0 HTML: <tr class="grid_table_header">
 			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="col">Comments</th><th class="grid_table_header" scope="col">Action</th>
 		</tr>
-2025-01-24 16:33:05,294 - INFO - Row 1 HTML: <tr class="grid_table_alt">
+2025-01-24 16:39:12,788 - INFO - Row 1 HTML: <tr class="grid_table_alt">
 			<td>
                                             <span id="lblCustomer">Berkshire Medical Center</span>
                                         </td><td>
@@ -89,49 +89,53 @@ PITTSFIELD, MA 01201<br>
 									         <input type="submit" name="ctl00$InterpretersContent$gvOrders$ctl15$cmbAccept" value="Accept" onclick="return confirm('Please confirm if you would like to accept this assignment');" id="cmbAccept" class="buttonSubmit">							         
 									    </td>
 		</tr>
-2025-01-24 16:33:35,404 - INFO - Found 2 data rows after filtering headers
-2025-01-24 16:33:35,441 - INFO - Found 1 assignments
-2025-01-24 16:33:35,441 - INFO - 
-Found 1 assignments
-2025-01-24 16:33:35,441 - INFO - 
+2025-01-24 16:39:42,898 - INFO - Found 2 data rows after filtering headers
+2025-01-24 16:39:42,978 - INFO - Found 2 assignments
+2025-01-24 16:39:42,978 - INFO - 
+Found 2 assignments
+2025-01-24 16:39:42,979 - INFO - 
 Assignment #1:
-2025-01-24 16:33:35,441 - INFO - Customer: New Bedford Public Schools SPED
-2025-01-24 16:33:35,441 - INFO - Date_Time: 2/6/2025
+2025-01-24 16:39:42,979 - INFO - Customer: Berkshire Medical Center
+2025-01-24 16:39:42,979 - INFO - Date_Time: 2/4/2025
+9:45 AM
+2025-01-24 16:39:42,979 - INFO - Language: French
+2025-01-24 16:39:42,979 - INFO - Service_Type: In-person Interpretation
+2025-01-24 16:39:42,979 - INFO - Info: Contact person's name and phone number: RADIOLOGY - Berkshire Medical Center
+Contact person's email address:kfrench@bhs1.org
+Address: BMC 725 NORTH STREET PITTSFIELD, MA 01201
+
+Location: MAIN FLOOR
+Client name and phone: AMINATA MBODJ; 4134472296
+2025-01-24 16:39:42,979 - INFO - Comments: DOWNLOAD BMC form from your page, get BMC badge & sign in register book @ office. TAKE PICTURE of COMPLETED FORM TO UPLOAD ONLINE LATER, drop off form & BMC badge @ ‘blue box’ outside the office. If over 2hrs, call LBridge 413.478.4342
+2025-01-24 16:39:42,979 - INFO - 
+Assignment #2:
+2025-01-24 16:39:42,979 - INFO - Customer: New Bedford Public Schools SPED
+2025-01-24 16:39:42,979 - INFO - Date_Time: 2/6/2025
 10:15 AM
-2025-01-24 16:33:35,441 - INFO - Language: French
-2025-01-24 16:33:35,441 - INFO - Service_Type: In-person Interpretation
-2025-01-24 16:33:35,442 - INFO - Info: Contact person's name and phone number: Mary mholloway@newbedfordschools.org
+2025-01-24 16:39:42,979 - INFO - Language: French
+2025-01-24 16:39:42,979 - INFO - Service_Type: In-person Interpretation
+2025-01-24 16:39:42,979 - INFO - Info: Contact person's name and phone number: Mary mholloway@newbedfordschools.org
 Contact person's email address:fnieves@newbedfordschools.org
 Address: Carney School 247 Elm St. New Bedford Ma. 02740
 
 Location: Main Entrance
 Client name and phone: UN;
-2025-01-24 16:33:35,442 - INFO - Comments: This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues.
-2025-01-24 16:33:35,442 - INFO - Assignments saved to assignments.txt
-2025-01-24 16:33:35,442 - INFO - New assignments saved to assignments.txt
-2025-01-24 16:33:35,442 - INFO - 
-Changes detected:
-2025-01-24 16:33:35,442 - INFO - Assignment removed: Berkshire Medical Center - French - MAIN FLOOR
-2025-01-24 16:33:35,442 - INFO - 
-Sending email notification...
-2025-01-24 16:33:35,442 - INFO - Attempting to connect to SMTP server...
-2025-01-24 16:33:35,554 - INFO - Connected to SMTP server, initiating TLS...
-2025-01-24 16:33:35,652 - INFO - Attempting login...
-2025-01-24 16:33:35,958 - INFO - Sending email notification...
-2025-01-24 16:33:36,814 - INFO - Email notification sent successfully
-2025-01-24 16:33:36,852 - INFO - Email notification sent successfully
-2025-01-24 16:33:36,852 - INFO - Previous_assignments.txt updated with new content
-2025-01-24 16:33:36,902 - INFO - Chrome driver cleaned up successfully
+2025-01-24 16:39:42,979 - INFO - Comments: This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues.
+2025-01-24 16:39:42,979 - INFO - Assignments saved to assignments.txt
+2025-01-24 16:39:42,979 - INFO - New assignments saved to assignments.txt
+2025-01-24 16:39:42,980 - INFO - No changes detected in assignments
+2025-01-24 16:39:42,980 - INFO - No email notification needed.
+2025-01-24 16:39:42,980 - INFO - Chrome driver cleaned up successfully
 
 === Workflow Logs ===
 === Workflow Run Details ===
-Run Number: 654
-Run Time: Fri Jan 24 16:33:38 UTC 2025
-Run ID: 12953235154
+Run Number: 655
+Run Time: Fri Jan 24 16:39:44 UTC 2025
+Run ID: 12953702456
 
 === Runtime Configuration ===
-LAST_RUN=1737736323
-TARGET_RUN=1737737591
+LAST_RUN=1737736690
+TARGET_RUN=1737738273
 
 === Environment ===
 Python Version: Python 3.11.11
@@ -139,12 +143,12 @@ Node Version: v20.18.1
 Working Directory: /home/runner/work/bridgescrap/bridgescrap
 
 === Runtime Info ===
-LAST_RUN=1737734981
-TARGET_RUN=1737737137
+LAST_RUN=1737736690
+TARGET_RUN=1737738273
 
 === Status ===
-Last run: Fri Jan 24 16:33:41 UTC 2025
+Last run: Fri Jan 24 16:39:45 UTC 2025
 Status: success
-Run number: 654
-Next run: Not before Fri Jan 24 16:43:41 UTC 2025
+Run number: 655
+Next run: Not before Fri Jan 24 16:49:45 UTC 2025
 
