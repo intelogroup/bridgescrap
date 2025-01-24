@@ -133,9 +133,6 @@ def get_assignments(driver) -> list:
             
             logger.info(f"Found {len(rows)} data rows after filtering headers")
             
-            # Skip header row if present
-            rows = rows[1:] if rows else []
-            
             for row in rows:
                 try:
                     # No need for delay between rows as we're just reading data
