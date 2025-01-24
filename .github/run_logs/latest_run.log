@@ -1,28 +1,150 @@
-=== Latest Run Log (Run ID: 12949059413) ===
-Timestamp: 2025-01-24 11:52:12 UTC
+=== Latest Run Log (Run ID: 12949378004) ===
+Timestamp: 2025-01-24 12:15:51 UTC
 ================================================
 
 === Bridge Logs ===
-No bridge logs found
+2025-01-24 12:13:45,080 - INFO - Starting Bridge Assignment Checker
+2025-01-24 12:13:45,080 - INFO - Running in GitHub Actions environment
+2025-01-24 12:13:45,080 - INFO - Setting up WebDriver...
+2025-01-24 12:13:45,081 - INFO - Using user agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36
+2025-01-24 12:13:45,081 - INFO - Using window size: 1901x1041
+2025-01-24 12:13:45,648 - INFO - Detected Chrome version string: snap
+2025-01-24 12:13:45,648 - WARNING - Could not parse major version from: snap
+2025-01-24 12:13:45,793 - INFO - Detected Chrome version string: 132.0.6834.83
+2025-01-24 12:13:45,793 - INFO - Successfully parsed major version: 132
+2025-01-24 12:13:45,793 - INFO - Using detected Chrome version: 132
+2025-01-24 12:13:45,793 - INFO - Using Chrome version: 132
+2025-01-24 12:13:45,793 - INFO - Running in GitHub Actions environment with headless mode
+2025-01-24 12:13:45,793 - INFO - ====== WebDriver manager ======
+2025-01-24 12:13:45,859 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 12:13:45,891 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 12:13:45,902 - INFO - There is no [linux64] chromedriver "132.0.6834.110" for browser google-chrome "132.0.6834" in cache
+2025-01-24 12:13:45,902 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 12:13:45,940 - INFO - WebDriver version 132.0.6834.110 selected
+2025-01-24 12:13:45,942 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/linux64/chromedriver-linux64.zip
+2025-01-24 12:13:45,942 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/132.0.6834.110/linux64/chromedriver-linux64.zip
+2025-01-24 12:13:45,967 - INFO - Driver downloading response is 200
+2025-01-24 12:13:46,023 - INFO - Get LATEST chromedriver version for google-chrome
+2025-01-24 12:13:46,143 - INFO - Driver has been saved in cache [/home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.110]
+2025-01-24 12:13:46,150 - INFO - patching driver executable /home/runner/.wdm/drivers/chromedriver/linux64/132.0.6834.110/chromedriver-linux64/chromedriver
+2025-01-24 12:14:02,782 - INFO - WebDriver setup completed successfully
+2025-01-24 12:14:02,782 - INFO - Attempting to login...
+2025-01-24 12:14:04,401 - INFO - Adding random delay of 4.35 seconds
+2025-01-24 12:14:08,754 - INFO - Adding initial delay of 2.32 seconds before looking for username field
+2025-01-24 12:14:11,071 - INFO - Waiting up to 16.4 seconds for username field
+2025-01-24 12:14:11,081 - INFO - Successfully found username field
+2025-01-24 12:14:11,081 - INFO - Adding post-delay of 2.41 seconds
+2025-01-24 12:14:13,494 - INFO - Adding random delay of 4.71 seconds
+2025-01-24 12:14:18,206 - INFO - Adding initial delay of 1.16 seconds before looking for password field
+2025-01-24 12:14:19,363 - INFO - Waiting up to 15.6 seconds for password field
+2025-01-24 12:14:19,372 - INFO - Successfully found password field
+2025-01-24 12:14:19,372 - INFO - Adding post-delay of 2.64 seconds
+2025-01-24 12:14:22,008 - INFO - Adding random delay of 2.59 seconds
+2025-01-24 12:14:24,596 - INFO - Adding initial delay of 2.41 seconds before looking for submit button
+2025-01-24 12:14:27,002 - INFO - Waiting up to 15.5 seconds for submit button
+2025-01-24 12:14:27,011 - INFO - Successfully found submit button
+2025-01-24 12:14:27,011 - INFO - Adding post-delay of 2.30 seconds
+2025-01-24 12:14:29,414 - INFO - Adding random delay of 3.02 seconds
+2025-01-24 12:14:32,497 - INFO - Adding random delay of 4.40 seconds
+2025-01-24 12:14:36,897 - INFO - Submitting login form...
+2025-01-24 12:14:37,378 - INFO - Login successful! Current URL: https://lbridge.com/Interpreters/notifications
+2025-01-24 12:14:37,378 - INFO - Navigating to assignments page...
+2025-01-24 12:14:47,837 - INFO - Current URL after navigation: https://lbridge.com/Interpreters/open_assignments
+2025-01-24 12:14:47,837 - INFO - Adding random delay of 2.32 seconds
+2025-01-24 12:14:50,170 - INFO - Found table using generic table tag
+2025-01-24 12:14:50,176 - INFO - Table HTML: <table cellspacing="0" rules="all" class="grid_table" border="0" id="gvOrders" style="border-collapse:collapse;">
+		<tbody><tr class="grid_table_header">
+			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="c
+2025-01-24 12:15:00,208 - INFO - Table text preview: Customer Service
+Date / Time Language Type of service Assignment info Comments Action
+Berkshire Medical Center 2/4/2025
+9:45 AM French In-person Interpretation Contact person's name and phone number: 
+2025-01-24 12:15:00,225 - INFO - Found 3 total rows
+2025-01-24 12:15:00,230 - INFO - Row 0 HTML: <tr class="grid_table_header">
+			<th class="grid_table_header" scope="col">Customer</th><th class="grid_table_header" scope="col">Service <br> Date / Time</th><th class="grid_table_header" scope="col">Language</th><th class="grid_table_header" scope="col">Type of service</th><th class="grid_table_header" scope="col">Assignment info</th><th class="grid_table_header" scope="col">Comments</th><th class="grid_table_header" scope="col">Action</th>
+		</tr>
+2025-01-24 12:15:00,235 - INFO - Row 1 HTML: <tr class="grid_table_alt">
+			<td>
+                                            <span id="lblCustomer">Berkshire Medical Center</span>
+                                        </td><td>
+								            2/4/2025<br>
+								            9:45 AM
+									    </td><td>
+                                            <span id="lblLang">French</span>
+                                        </td><td>
+								            <span id="lblTypeofService">In-person Interpretation</span> 
+								        </td><td>
+								            Contact person's name and phone number: RADIOLOGY - Berkshire Medical Center<br>
+									        Contact person's email address:kfrench@bhs1.org<br>
+                                            Address:  BMC
+725 NORTH STREET
+PITTSFIELD, MA 01201<br>
+											<br>  	
+								            <span>Location: MAIN FLOOR<br></span>                                   
+                                            Client name and phone: AMINATA MBODJ; 4134472296<br>
+                                            
+									    </td><td>
+								            DOWNLOAD BMC form from your page, get BMC badge &amp; sign in register book @ office. TAKE PICTURE of COMPLETED FORM TO UPLOAD ONLINE LATER, drop off form &amp; BMC badge @ ‘blue box’ outside the office. If over 2hrs, call LBridge 413.478.4342
+								       </td><td align="left"> 
+									         <input type="submit" name="ctl00$InterpretersContent$gvOrders$ctl11$cmbAccept" value="Accept" onclick="return confirm('Please confirm if you would like to accept this assignment');" id="cmbAccept" class="buttonSubmit">							         
+									    </td>
+		</tr>
+2025-01-24 12:15:30,313 - INFO - Found 2 data rows after filtering headers
+2025-01-24 12:15:30,360 - INFO - Found 1 assignments
+2025-01-24 12:15:30,360 - INFO - 
+Found 1 assignments
+2025-01-24 12:15:30,360 - INFO - 
+Assignment #1:
+2025-01-24 12:15:30,360 - INFO - Customer: New Bedford Public Schools SPED
+2025-01-24 12:15:30,360 - INFO - Date_Time: 2/6/2025
+10:15 AM
+2025-01-24 12:15:30,360 - INFO - Language: French
+2025-01-24 12:15:30,360 - INFO - Service_Type: In-person Interpretation
+2025-01-24 12:15:30,360 - INFO - Info: Contact person's name and phone number: Mary mholloway@newbedfordschools.org
+Contact person's email address:fnieves@newbedfordschools.org
+Address: Carney School 247 Elm St. New Bedford Ma. 02740
+
+Location: Main Entrance
+Client name and phone: UN;
+2025-01-24 12:15:30,360 - INFO - Comments: This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues.
+2025-01-24 12:15:30,360 - INFO - Assignments saved to assignments.txt
+2025-01-24 12:15:30,361 - INFO - New assignments saved to assignments.txt
+2025-01-24 12:15:30,361 - INFO - 
+Changes detected:
+2025-01-24 12:15:30,361 - INFO - Assignment removed: Berkshire Medical Center - French - MAIN FLOOR
+2025-01-24 12:15:30,361 - INFO - 
+Sending email notification...
+2025-01-24 12:15:30,361 - INFO - Attempting to connect to SMTP server...
+2025-01-24 12:15:30,461 - INFO - Connected to SMTP server, initiating TLS...
+2025-01-24 12:15:30,559 - INFO - Attempting login...
+2025-01-24 12:15:30,803 - INFO - Sending email notification...
+2025-01-24 12:15:31,648 - INFO - Email notification sent successfully
+2025-01-24 12:15:31,685 - INFO - Email notification sent successfully
+2025-01-24 12:15:31,686 - INFO - Previous_assignments.txt updated with new content
+2025-01-24 12:15:31,815 - INFO - Chrome driver cleaned up successfully
 
 === Workflow Logs ===
 === Workflow Run Details ===
-Run Number: 642
-Run Time: Fri Jan 24 11:51:57 UTC 2025
-Run ID: 12949059413
+Run Number: 643
+Run Time: Fri Jan 24 12:15:33 UTC 2025
+Run ID: 12949378004
 
 === Runtime Configuration ===
-LAST_RUN=0
-TARGET_RUN=0
+LAST_RUN=1737720823
+TARGET_RUN=1737722282
 
 === Environment ===
 Python Version: Python 3.11.11
 Node Version: v20.18.1
 Working Directory: /home/runner/work/bridgescrap/bridgescrap
 
+=== Runtime Info ===
+LAST_RUN=1737720823
+TARGET_RUN=1737722282
+
 === Status ===
-Last run: Fri Jan 24 11:51:58 UTC 2025
-Status: skipped
-Run number: 642
-Next run: Not before Fri Jan 24 12:01:58 UTC 2025
+Last run: Fri Jan 24 12:15:34 UTC 2025
+Status: success
+Run number: 643
+Next run: Not before Fri Jan 24 12:25:34 UTC 2025
 
