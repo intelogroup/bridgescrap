@@ -9,6 +9,10 @@ env:
   PRODUCTION: true
   NOTIFICATION_EMAIL: ${{ secrets.EMAIL_USER }}
 
+permissions:
+  contents: write
+  issues: write
+
 jobs:
   check-assignments:
     runs-on: ubuntu-24.04
@@ -20,6 +24,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch all history for proper file tracking
     
     - name: Install dependencies
       run: |
@@ -320,15 +326,14 @@ jobs:
         compression-level: 9
         overwrite: true
         
-    - name: Upload assignments
+    - name: Commit assignment changes
       if: steps.random_check.outputs.should_run == 'true'
-      uses: actions/upload-artifact@v4
-      with:
-        name: assignments-${{ github.run_number }}
-        path: Previous_assignments.txt
-        retention-days: 90
-        compression-level: 9
-        overwrite: true
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add Previous_assignments.txt
+        git commit -m "Update assignments [skip ci]" || echo "No changes to commit"
+        git push
 
     - name: Notify on failure
       if: env.SCRIPT_FAILED == 'true'
