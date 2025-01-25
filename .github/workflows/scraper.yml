@@ -316,38 +316,79 @@ jobs:
         echo "Created log file:"
         cat bridge_logs/workflow.log
 
-    - name: Upload logs
+    - name: Generate health report
+      if: always()
+      run: |
+        echo "::notice::Generating health report"
+        python -c "
+        from monitoring import metrics
+        report = metrics.get_metrics_report()
+        with open('bridge_logs/health_report.txt', 'w') as f:
+            f.write(report)
+        print(report)
+        "
+
+    - name: Upload logs and metrics
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: bridge-logs-${{ github.run_number }}
-        path: bridge_logs/
+        path: |
+          bridge_logs/
+          data/metrics.json
         retention-days: 30
         compression-level: 9
         overwrite: true
         
-    - name: Commit assignment changes
+    - name: Commit changes
       if: steps.random_check.outputs.should_run == 'true'
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
+        
+        # Stage files
         git add Previous_assignments.txt
-        git commit -m "Update assignments [skip ci]" || echo "No changes to commit"
+        git add data/metrics.json
+        
+        # Create commit message with health status
+        HEALTH_STATUS=$(python -c "
+        from monitoring import metrics
+        status = metrics.get_health_status()
+        print('🟢 Healthy' if status['healthy'] else '🔴 Unhealthy')
+        ")
+        
+        git commit -m "Update assignments and metrics [skip ci]
+        
+        Health Status: $HEALTH_STATUS" || echo "No changes to commit"
+        
         git push
 
-    - name: Notify on failure
-      if: env.SCRIPT_FAILED == 'true'
+    - name: Notify on failure or health issues
+      if: env.SCRIPT_FAILED == 'true' || failure()
       uses: actions/github-script@v7
       with:
         script: |
           const { repo, owner } = context.repo;
           const run_id = context.runId;
           
+          // Get health status
+          const fs = require('fs');
+          let healthReport = '';
+          try {
+            healthReport = fs.readFileSync('bridge_logs/health_report.txt', 'utf8');
+          } catch (error) {
+            console.error('Error reading health report:', error);
+            healthReport = 'Error: Could not read health report';
+          }
+          
           const message = `
-          🚨 Bridge Assignment Checker Failed
+          🚨 Bridge Assignment Checker Issue Detected
           
           Workflow: ${context.workflow}
           Run: ${run_id}
+          
+          Health Report:
+          ${healthReport}
           
           Check the logs at:
           https://github.com/${owner}/${repo}/actions/runs/${run_id}

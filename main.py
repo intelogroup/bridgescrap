@@ -4,10 +4,13 @@ import logging
 import atexit
 import traceback
 from datetime import datetime
+from typing import List, Dict, Tuple
 from dotenv import load_dotenv
 from login import login
 from assignments import get_assignments
 from email_handler import send_notification
+from validation import validate_and_sanitize_assignments
+from monitoring import metrics
 
 # Set up logging first, before any other operations
 if os.getenv('GITHUB_ACTIONS'):
@@ -48,131 +51,131 @@ def cleanup_driver(driver):
 def format_assignment(assignment):
     """Format a single assignment for consistent structure"""
     formatted = {}
-    formatted['customer'] = assignment.get('customer', '')
-    formatted['language'] = assignment.get('language', '')
-    formatted['service_type'] = assignment.get('service_type', '')
     
+    # Fields that should be case-sensitive
+    case_sensitive_fields = {'info', 'comments'}
+    
+    def normalize_value(value: str, preserve_case: bool = False) -> str:
+        """Normalize a value by cleaning spaces and handling case"""
+        if not isinstance(value, str):
+            return str(value)
+        
+        # Replace multiple spaces with single space and strip
+        value = ' '.join(value.split())
+        
+        if not value:
+            return 'N/A'
+            
+        if not preserve_case:
+            value = value.lower()
+            
+        return value
+    
+    # Copy and normalize direct fields
+    direct_fields = {
+        'customer': assignment.get('customer', ''),
+        'language': assignment.get('language', ''),
+        'service_type': assignment.get('service_type', ''),
+        'comments': assignment.get('comments', '')
+    }
+    
+    for field, value in direct_fields.items():
+        preserve_case = field in case_sensitive_fields
+        formatted[field] = normalize_value(value, preserve_case)
+    
+    # Extract fields from info
     info = assignment.get('info', '')
-    for line in info.split('\n'):
-        line = line.strip()
-        if 'Contact person\'s name and phone number:' in line:
-            formatted['contact_person_name_and_phone'] = line.split(':', 1)[1].strip()
-        elif 'Contact person\'s email address:' in line:
-            formatted['contact_person\'s_email_address'] = line.split(':', 1)[1].strip()
-        elif 'Address:' in line:
-            formatted['address'] = line.split(':', 1)[1].strip()
-        elif 'Location:' in line:
-            formatted['location'] = line.split(':', 1)[1].strip()
-        elif 'Client name and phone:' in line:
-            formatted['client_name_and_phone'] = line.split(':', 1)[1].strip()
+    info_lines = [line.strip() for line in info.split('\n') if line.strip()]
     
-    formatted['comments'] = assignment.get('comments', '')
+    # Initialize fields that should be extracted from info
+    info_fields = {
+        'contact_person_name_and_phone': 'N/A',
+        'contact_person\'s_email_address': 'N/A',
+        'address': 'N/A',
+        'location': 'N/A',
+        'client_name_and_phone': 'N/A'
+    }
+    formatted.update(info_fields)
+    
+    # Process each line of info
+    current_field = None
+    current_value = []
+    
+    for line in info_lines:
+        # Check for field markers
+        if 'Contact person\'s name and phone number:' in line:
+            if current_field and current_value:
+                formatted[current_field] = normalize_value(' '.join(current_value), True)
+            current_field = 'contact_person_name_and_phone'
+            current_value = [line.split(':', 1)[1].strip()]
+        elif 'Contact person\'s email address:' in line:
+            if current_field and current_value:
+                formatted[current_field] = normalize_value(' '.join(current_value), True)
+            current_field = 'contact_person\'s_email_address'
+            current_value = [line.split(':', 1)[1].strip()]
+        elif 'Address:' in line:
+            if current_field and current_value:
+                formatted[current_field] = normalize_value(' '.join(current_value), True)
+            current_field = 'address'
+            current_value = [line.split(':', 1)[1].strip()]
+        elif 'Location:' in line:
+            if current_field and current_value:
+                formatted[current_field] = normalize_value(' '.join(current_value), True)
+            current_field = 'location'
+            current_value = [line.split(':', 1)[1].strip()]
+        elif 'Client name and phone:' in line:
+            if current_field and current_value:
+                formatted[current_field] = normalize_value(' '.join(current_value), True)
+            current_field = 'client_name_and_phone'
+            current_value = [line.split(':', 1)[1].strip()]
+        elif current_field:  # Continue previous field if no new field marker
+            current_value.append(line)
+    
+    # Save the last field being processed
+    if current_field and current_value:
+        formatted[current_field] = normalize_value(' '.join(current_value), True)
+    
     return formatted
 
-def save_assignments(assignments, filename="Previous_assignments.txt"):
-    """Save assignments to a file with consistent formatting"""
-    try:
-        # Write formatted assignments to file
-        with open(filename, 'w', encoding='utf-8') as f:
-            f.write("Bridge Assignments Report\n\n")
-            for i, assignment in enumerate(assignments, 1):
-                f.write(f"Assignment #{i}:\n")
-                f.write("-" * 30 + "\n")
-                for key, value in sorted(assignment.items()):  # Sort keys for consistent order
-                    if value:  # Only write non-empty values
-                        f.write(f"{key.title()}: {value}\n")
-                f.write("\n")
-        
-        logger.info(f"Assignments saved to {filename}")
-        return True
-    except Exception as e:
-        logger.error(f"Error saving assignments: {str(e)}")
-        logger.error(traceback.format_exc())
-        return False
+from storage import AssignmentStorage
 
-def parse_assignments(content):
-    """Parse assignments from file content"""
-    assignments_list = []
-    current_assignment = {}
-    # Skip header lines and empty lines
-    lines = [line.strip() for line in content.split('\n') 
-            if line.strip() and not line.startswith('Bridge Assignments Report')]
-    
-    for line in lines:
-        if line.startswith('Assignment #'):
-            if current_assignment:
-                assignments_list.append(current_assignment)
-            current_assignment = {}
-        elif line.startswith('-'): # Skip separator lines
-            continue
-        elif ':' in line:
-            key, value = [part.strip() for part in line.split(':', 1)]
-            # Normalize keys to make comparison more reliable
-            key = key.lower().replace(' ', '_')
-            # Normalize empty or n/a values
-            value = '' if value.lower() in ['n/a', 'none', ''] else value
-            current_assignment[key] = value
-    
-    if current_assignment:
-        assignments_list.append(current_assignment)
-    return assignments_list
+# Initialize storage
+storage = AssignmentStorage()
 
-def compare_assignments(prev_assignments, curr_assignments):
-    """Compare assignments with detailed change tracking, ignoring timestamps"""
-    changes = []
+def process_assignments(assignments: List[Dict[str, str]]) -> Tuple[List[Dict[str, str]], bool, List[str], List[Dict]]:
+    """
+    Process and validate assignments
     
-    # Filter out any timestamp fields from assignments before comparison
-    def remove_timestamps(assignment):
-        return {k: v for k, v in assignment.items() if not any(time_field in k.lower() for time_field in ['date', 'time'])}
-    
-    prev_assignments = [remove_timestamps(a) for a in prev_assignments]
-    curr_assignments = [remove_timestamps(a) for a in curr_assignments]
-    def get_assignment_key(assignment):
-        return (
-            assignment.get('customer', ''),
-            assignment.get('language', ''),
-            assignment.get('location', '')  # Using location instead of date_time for content-based matching
-        )
-    
-    prev_keys = {get_assignment_key(a) for a in prev_assignments}
-    curr_keys = {get_assignment_key(a) for a in curr_assignments}
-    
-    # Find new and removed assignments
-    new_keys = curr_keys - prev_keys
-    removed_keys = prev_keys - curr_keys
-    
-    # Log new assignments
-    for key in new_keys:
-        changes.append(f"New assignment added: {key[0]} - {key[1]} - {key[2]}")
-    
-    # Log removed assignments
-    for key in removed_keys:
-        changes.append(f"Assignment removed: {key[0]} - {key[1]} - {key[2]}")
-    
-    # Compare assignments that exist in both lists
-    common_keys = prev_keys & curr_keys
-    important_fields = ['customer', 'language', 'service_type', 'location', 
-                       'client_name_and_phone', 'contact_person\'s_email_address']
-    
-    for key in common_keys:
-        prev = next(a for a in prev_assignments if get_assignment_key(a) == key)
-        curr = next(a for a in curr_assignments if get_assignment_key(a) == key)
-        assignment_changes = []
+    Args:
+        assignments: Raw assignments from scraper
         
-        for field in important_fields:
-            prev_value = prev.get(field, '')
-            curr_value = curr.get(field, '')
-            if prev_value != curr_value:
-                assignment_changes.append(f"{field}: '{prev_value}' → '{curr_value}'")
-        
-        if assignment_changes:
-            changes.append(f"Changes in Assignment ({key[0]}, {key[1]}):")
-            changes.extend([f"  - {change}" for change in assignment_changes])
+    Returns:
+        Tuple of (processed assignments, has changes, change messages, new assignments)
+    """
+    # Validate and sanitize assignments
+    sanitized_assignments, validation_errors = validate_and_sanitize_assignments(assignments)
     
-    return bool(changes), changes
+    # Record any validation errors
+    for assignment_errors in validation_errors.values():
+        for error in assignment_errors:
+            metrics.record_validation_error(f"{error.field}: {error.error}")
+    
+    # Compare with stored assignments
+    has_changes, changes, new_assignments = storage.compare_assignments(sanitized_assignments)
+    
+    # If changes detected, save new assignments
+    if has_changes:
+        if not storage.save_assignments(sanitized_assignments):
+            logger.error("Failed to save assignments")
+            metrics.record_error("storage_write_error")
+    
+    return sanitized_assignments, has_changes, changes, new_assignments
 
 def main():
     try:
+        # Start metrics tracking
+        metrics.start_run()
+        
         # Ensure required directories exist
         os.makedirs('bridge_logs', exist_ok=True)
         os.makedirs('data', exist_ok=True)
@@ -207,56 +210,79 @@ def main():
                     for key, value in assignment.items():
                         logger.info(f"{key.title()}: {value}")
                 
-                # Load previous assignments
-                previous_assignments_content = ""
-                prev_assignments = []
-                if os.path.exists("Previous_assignments.txt"):
-                    try:
-                        with open("Previous_assignments.txt", 'r', encoding='utf-8') as f:
-                            previous_assignments_content = f.read()
-                            prev_assignments = parse_assignments(previous_assignments_content)
-                    except Exception as e:
-                        logger.error(f"Error reading Previous_assignments.txt: {str(e)}")
-                        logger.error(traceback.format_exc())
-
-                # Format current assignments for comparison
-                formatted_assignments = [format_assignment(assignment) for assignment in assignments]
-
-                # Compare current assignments with previous ones
-                has_changes, changes = compare_assignments(prev_assignments, formatted_assignments)
+                # Process and validate assignments
+                formatted_assignments, has_changes, changes, new_assignments = process_assignments(assignments)
                 
-                if has_changes:
-                    logger.info("\nChanges detected:")
+                if has_changes and new_assignments:  # Only notify if there are new assignments
+                    logger.info("\nNew assignments detected:")
                     for change in changes:
-                        logger.info(change)
-                    logger.info("\nSending email notification...")
+                        if change.startswith("New assignment added:"):
+                            logger.info(change)
                     
-                    if send_notification(changes, formatted_assignments):
+                    logger.info("\nSending email notification for new assignments...")
+                    
+                    # Get health status for notification
+                    health_status = metrics.get_health_status()
+                    
+                    # Filter changes to only include new assignments
+                    new_assignment_changes = [
+                        change for change in changes 
+                        if change.startswith("New assignment added:")
+                    ]
+                    
+                    if not health_status['healthy']:
+                        new_assignment_changes.append("\n⚠️ System Health Warnings:")
+                        for warning in health_status['warnings']:
+                            new_assignment_changes.append(f"- {warning}")
+                        for error in health_status['errors']:
+                            new_assignment_changes.append(f"- {error}")
+                    
+                    if send_notification(new_assignment_changes, new_assignments):
                         logger.info("Email notification sent successfully")
-                        # Save new assignments to Previous_assignments.txt
-                        if save_assignments(formatted_assignments):
-                            logger.info("Previous_assignments.txt updated with new content")
+                        metrics.record_error("notification_success")
+                        
+                        # Save all assignments to storage
+                        if storage.save_assignments(formatted_assignments):
+                            logger.info("Assignments saved successfully")
                         else:
-                            logger.error("Failed to update Previous_assignments.txt")
+                            logger.error("Failed to save assignments")
+                            metrics.record_error("storage_write_error")
                     else:
                         logger.error("Failed to send email notification")
+                        metrics.record_error("notification_failure")
                 else:
-                    logger.info("No changes detected in assignments")
+                    if has_changes:
+                        logger.info("Changes detected but no new assignments")
+                    else:
+                        logger.info("No changes detected in assignments")
                     logger.info("No email notification needed.")
             else:
                 logger.warning("No assignments found")
+                metrics.record_error("no_assignments")
         except Exception as e:
+            error_type = type(e).__name__
             logger.error(f"An error occurred during execution: {str(e)}")
             logger.error(traceback.format_exc())
+            metrics.record_error(error_type)
             sys.exit(1)
         finally:
             if driver:
                 atexit.unregister(cleanup_driver)  # Deregister the cleanup handler
                 cleanup_driver(driver)  # Call cleanup once
     except Exception as e:
+        error_type = type(e).__name__
         logger.error(f"Critical error in main: {str(e)}")
         logger.error(traceback.format_exc())
+        metrics.record_error(error_type)
         sys.exit(1)
+    finally:
+        # Record run completion
+        success = sys.exc_info()[0] is None
+        metrics.end_run(
+            success=success,
+            assignments_count=len(assignments) if 'assignments' in locals() else 0,
+            notifications_sent=1 if success and 'has_changes' in locals() and has_changes else 0
+        )
 
 if __name__ == "__main__":
     main()

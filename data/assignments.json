@@ -1,0 +1,52 @@
+{
+  "last_updated": "2025-01-25T01:15:48.705906",
+  "assignments": [
+    {
+      "customer": "new bedford public schools sped",
+      "date_time": "02/06/2025 10:15 AM",
+      "language": "French",
+      "service_type": "in-person interpretation",
+      "info": "Contact person's name and phone number: Mary mholloway@newbedfordschools.org\nContact person's email address:fnieves@newbedfordschools.org\nAddress: Carney School 247 Elm St. New Bedford Ma. 02740\n\nLocation: Main Entrance\nClient name and phone: UN;",
+      "comments": "This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues."
+    }
+  ],
+  "history": [
+    {
+      "timestamp": "2025-01-25T00:32:32.253854",
+      "assignments": [
+        {
+          "customer": "New Bedford Public Schools SPED",
+          "language": "French",
+          "service_type": "in-person interpretation",
+          "info": "Contact person's name and phone number: Mary mholloway@newbedfordschools.org\nContact person's email address:fnieves@newbedfordschools.org\nAddress: Carney School 247 Elm St. New Bedford Ma. 02740\n\nLocation: Main Entrance\nClient name and phone: UN;",
+          "comments": "This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues."
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-01-25T00:32:35.492375",
+      "assignments": [
+        {
+          "customer": "New Bedford Public Schools SPED",
+          "language": "French",
+          "service_type": "in-person interpretation",
+          "info": "Contact person's name and phone number: Mary mholloway@newbedfordschools.org\nContact person's email address:fnieves@newbedfordschools.org\nAddress: Carney School 247 Elm St. New Bedford Ma. 02740\n\nLocation: Main Entrance\nClient name and phone: UN;",
+          "comments": "This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues."
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-01-25T01:15:46.307225",
+      "assignments": [
+        {
+          "customer": "new bedford public schools sped",
+          "date_time": "02/06/2025 10:15 AM",
+          "language": "French",
+          "service_type": "in-person interpretation",
+          "info": "Contact person's name and phone number: Mary mholloway@newbedfordschools.org\nContact person's email address:fnieves@newbedfordschools.org\nAddress: Carney School 247 Elm St. New Bedford Ma. 02740\n\nLocation: Main Entrance\nClient name and phone: UN;",
+          "comments": "This will be an In-Person IEP REV. Meeting; Interpreter should arrive 15 min prior the appointment. Call LBridge 413-478-4342 with any issues."
+        }
+      ]
+    }
+  ]
+}

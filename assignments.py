@@ -2,16 +2,54 @@ import logging
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import time
+import random
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from utils import wait_for_element
 from driver_setup import random_delay
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 logger = logging.getLogger(__name__)
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# Custom exceptions for better error handling
+class SessionExpiredException(Exception):
+    """Raised when the session has expired"""
+    pass
+
+class WebsiteErrorException(Exception):
+    """Raised when the website returns an error"""
+    pass
+
+class MaintenanceModeException(Exception):
+    """Raised when the site is in maintenance mode"""
+    pass
+
+class NavigationException(Exception):
+    """Raised when navigation fails"""
+    pass
+
+@retry(
+    stop=stop_after_attempt(5),  # Increase retry attempts
+    wait=wait_exponential(multiplier=1, min=4, max=30),  # Longer max wait time
+    retry=retry_if_exception_type((
+        TimeoutException,
+        NoSuchElementException,
+        Exception  # Catch all for network issues
+    )),
+    before_sleep=lambda retry_state: logger.warning(
+        f"Retry attempt {retry_state.attempt_number} after error: {retry_state.outcome.exception()}"
+    )
+)
 def get_assignments(driver) -> list:
-    """Retrieve available assignments from the platform with retry logic"""
+    """
+    Retrieve available assignments from the platform with enhanced retry logic
+    
+    Returns:
+        list: List of assignment dictionaries
+        
+    Raises:
+        Exception: If unable to retrieve assignments after all retries
+    """
     try:
         logger.info("Navigating to assignments page...")
         driver.get("https://www.lbridge.com/Interpreters/open_assignments.aspx")
@@ -21,37 +59,92 @@ def get_assignments(driver) -> list:
             lambda d: d.execute_script('return document.readyState') == 'complete'
         )
         
-        # Check if we're logged in by looking for login-related elements
+        # Enhanced session validation
         try:
+            # Check for multiple indicators of session state
             login_elements = driver.find_elements(By.CSS_SELECTOR, 'input[type="password"], #login, .login-form')
+            error_elements = driver.find_elements(By.CSS_SELECTOR, '.error-message, .alert-error')
+            session_timeout_elements = driver.find_elements(By.XPATH, "//*[contains(text(), 'session') and contains(text(), 'expired')]")
+            
             if login_elements:
-                logger.error("Found login elements - session may have expired")
-                raise Exception("Session expired or not logged in")
+                logger.error("Found login elements - session expired")
+                raise SessionExpiredException("Session expired - login elements found")
+            elif error_elements:
+                error_text = error_elements[0].text if error_elements else "Unknown error"
+                logger.error(f"Found error message: {error_text}")
+                raise WebsiteErrorException(f"Website error: {error_text}")
+            elif session_timeout_elements:
+                logger.error("Session timeout detected")
+                raise SessionExpiredException("Session timeout message found")
+                
+        except (SessionExpiredException, WebsiteErrorException) as e:
+            logger.error(f"Session validation failed: {str(e)}")
+            raise
         except Exception as e:
-            logger.error(f"Error checking login state: {str(e)}")
+            logger.error(f"Unexpected error during session validation: {str(e)}")
             raise
         
-        # Verify we're on the correct page
+        # Enhanced URL validation with health check
         current_url = driver.current_url
         logger.info(f"Current URL after navigation: {current_url}")
         
-        # Handle potential redirects
-        if "login" in current_url.lower():
-            logger.error("Redirected to login page")
-            raise Exception("Session expired - redirected to login")
-        elif "open_assignments" not in current_url.lower():
-            logger.error(f"Not on assignments page. Current URL: {current_url}")
-            # Try to navigate again
-            driver.get("https://www.lbridge.com/Interpreters/open_assignments.aspx")
-            WebDriverWait(driver, 10).until(
-                lambda d: d.execute_script('return document.readyState') == 'complete'
-            )
-            current_url = driver.current_url
-            if "open_assignments" not in current_url.lower():
-                raise Exception(f"Failed to navigate to assignments page. Current URL: {current_url}")
+        # Define valid URLs and redirects
+        VALID_URLS = [
+            "lbridge.com/Interpreters/open_assignments",
+            "www.lbridge.com/Interpreters/open_assignments"
+        ]
+        ERROR_INDICATORS = ["error", "maintenance", "unavailable", "login"]
         
-        # Add random delay after navigation
-        random_delay()
+        # Check if we're on a valid page
+        if any(valid_url in current_url.lower() for valid_url in VALID_URLS):
+            logger.info("Successfully validated current URL")
+        else:
+            # Check for known error states
+            if any(indicator in current_url.lower() for indicator in ERROR_INDICATORS):
+                if "login" in current_url.lower():
+                    logger.error("Redirected to login page")
+                    raise SessionExpiredException("Session expired - redirected to login")
+                elif "maintenance" in current_url.lower():
+                    logger.error("Site is in maintenance mode")
+                    raise MaintenanceModeException("Site is under maintenance")
+                elif "error" in current_url.lower() or "unavailable" in current_url.lower():
+                    logger.error("Site error page detected")
+                    raise WebsiteErrorException("Site error page encountered")
+            
+            # If not on a valid page or known error page, try to recover
+            logger.warning(f"Not on assignments page. Current URL: {current_url}")
+            recovery_attempts = 3
+            for attempt in range(recovery_attempts):
+                try:
+                    logger.info(f"Recovery attempt {attempt + 1}/{recovery_attempts}")
+                    driver.get("https://www.lbridge.com/Interpreters/open_assignments.aspx")
+                    WebDriverWait(driver, 10).until(
+                        lambda d: d.execute_script('return document.readyState') == 'complete'
+                    )
+                    current_url = driver.current_url
+                    if any(valid_url in current_url.lower() for valid_url in VALID_URLS):
+                        logger.info("Successfully recovered navigation")
+                        break
+                except Exception as e:
+                    if attempt == recovery_attempts - 1:
+                        raise NavigationException(f"Failed to recover navigation after {recovery_attempts} attempts")
+                    logger.warning(f"Recovery attempt {attempt + 1} failed: {str(e)}")
+        
+        # Add intelligent delay based on page load time
+        start_time = time.time()
+        WebDriverWait(driver, 20).until(
+            lambda d: d.execute_script('return document.readyState') == 'complete' and
+                     len(d.find_elements(By.TAG_NAME, 'table')) > 0
+        )
+        load_time = time.time() - start_time
+        
+        # Adjust delay based on load time to avoid overwhelming the server
+        if load_time < 2:
+            delay = random.uniform(2, 4)
+        else:
+            delay = random.uniform(1, 2)
+        logger.info(f"Page loaded in {load_time:.2f}s, adding {delay:.2f}s delay")
+        time.sleep(delay)
         
         # Try to find the table directly with a more flexible approach
         table = None
@@ -138,9 +231,12 @@ def get_assignments(driver) -> list:
                     # No need for delay between rows as we're just reading data
                     cells = row.find_elements(By.TAG_NAME, 'td')
                     if len(cells) >= 6:
+                        # Clean and format date_time
+                        date_time = ' '.join(cells[1].text.strip().split())  # Replace newlines with space
+                        
                         assignment = {
                             'customer': cells[0].text.strip(),
-                            'date_time': cells[1].text.strip(),
+                            'date_time': date_time,
                             'language': cells[2].text.strip(),
                             'service_type': cells[3].text.strip(),
                             'info': cells[4].text.strip(),
