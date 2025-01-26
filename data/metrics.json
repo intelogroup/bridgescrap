@@ -1,11 +1,11 @@
 {
-  "total_runs": 37,
-  "successful_runs": 37,
+  "total_runs": 25,
+  "successful_runs": 25,
   "failed_runs": 0,
-  "total_assignments_processed": 37,
-  "total_notifications_sent": 35,
-  "average_processing_time": 105.97521588300984,
-  "last_successful_run": "2025-01-26T21:29:22.404220",
+  "total_assignments_processed": 25,
+  "total_notifications_sent": 23,
+  "average_processing_time": 106.79381515044625,
+  "last_successful_run": "2025-01-26T17:04:20.381908",
   "last_failed_run": null,
   "error_counts": {
     "notification_success": 23
@@ -13,9 +13,12 @@
   "validation_error_counts": {
     "service_type: Unknown service type. Valid types: In-person Interpretation, Document Translation, Video Interpretation, Phone Interpretation": 1,
     "service_type: Unknown service type. Valid types: Video Interpretation, Phone Interpretation, Document Translation, In-person Interpretation": 1,
-    "date_time: Missing required field": 2
+    "date_time: Missing required field": 2,
+    "customer: Invalid customer name format": 45,
+    "language: Possible typo. Did you mean: French?": 10
   },
-  "success_counts": {
-    "notification_sent": 12
-  }
+  "success_counts": {},
+  "recent_processing_times": [],
+  "recent_error_rates": [],
+  "max_history_size": 100
 }
