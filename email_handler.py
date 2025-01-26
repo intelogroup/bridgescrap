@@ -32,10 +32,23 @@ def send_notification(changes, assignments):
         body += "\n\nCurrent Assignments:\n"
         for i, assignment in enumerate(assignments, 1):
             body += f"\nAssignment #{i}:\n"
-            # Add all non-empty fields in a sorted order for consistency
-            for key, value in sorted(assignment.items()):
-                if value:  # Only include non-empty values
-                    body += f"{key.title()}: {value}\n"
+            # Format fields consistently for display
+            display_fields = {
+                'customer': lambda x: x.title(),  # Title case for readability
+                'date_time': lambda x: x,  # Keep standardized format
+                'language': lambda x: x,  # Keep original case
+                'service_type': lambda x: x.title(),  # Title case for readability
+                'info': lambda x: x,  # Keep original formatting
+                'comments': lambda x: x  # Keep original formatting
+            }
+            
+            # Add fields in a specific order for consistency
+            field_order = ['customer', 'date_time', 'language', 'service_type', 'info', 'comments']
+            for key in field_order:
+                value = assignment.get(key)
+                if value and value != 'N/A':  # Only include non-empty and non-N/A values
+                    formatter = display_fields.get(key, lambda x: x)
+                    body += f"{key.title()}: {formatter(value)}\n"
             body += "\n"
 
         msg = MIMEText(body)

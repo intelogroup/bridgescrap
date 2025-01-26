@@ -280,8 +280,11 @@ def sanitize_assignment(assignment: Dict[str, str]) -> Dict[str, str]:
     """
     sanitized = {}
     
-    # Fields that should be case-sensitive
-    case_sensitive_fields = {'info', 'comments'}
+    # Core identifying fields that should always be lowercase
+    lowercase_fields = {'customer', 'service_type'}
+    
+    # Fields that should maintain their case
+    case_sensitive_fields = {'info', 'comments', 'language'}
     
     # Known empty value indicators
     empty_values = {'n/a', 'none', 'null', '-', 'unknown', 'not specified', 'not available'}
@@ -332,9 +335,11 @@ def sanitize_assignment(assignment: Dict[str, str]) -> Dict[str, str]:
                         logger.warning(f"Failed to normalize date format: {str(e)}")
                         value = 'N/A'
             
-        # Normalize case based on field type
-        if key not in case_sensitive_fields:
-            value = value.lower()  # Default to lowercase for non-case-sensitive fields
+        # Apply case normalization based on field type
+        if key in lowercase_fields:
+            value = value.lower()  # Always lowercase for core identifying fields
+        elif key not in case_sensitive_fields:
+            value = value.lower()  # Default to lowercase for other fields
             
         # Normalize service type
         if key == 'service_type':
@@ -352,9 +357,9 @@ def sanitize_assignment(assignment: Dict[str, str]) -> Dict[str, str]:
                     value = standard
                     break
             
-        # Normalize language
+        # Keep language in original case to preserve proper nouns
         if key == 'language':
-            value = value.strip().title()  # Languages should be Title Case
+            value = value.strip()  # Just clean whitespace, preserve case
             
         sanitized[key] = value
         

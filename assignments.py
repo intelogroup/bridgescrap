@@ -234,13 +234,14 @@ def get_assignments(driver) -> list:
                         # Clean and format date_time
                         date_time = ' '.join(cells[1].text.strip().split())  # Replace newlines with space
                         
+                        # Normalize core fields during initial parsing
                         assignment = {
-                            'customer': cells[0].text.strip(),
-                            'date_time': date_time,
-                            'language': cells[2].text.strip(),
-                            'service_type': cells[3].text.strip(),
-                            'info': cells[4].text.strip(),
-                            'comments': cells[5].text.strip(),
+                            'customer': cells[0].text.strip().lower(),  # Normalize customer name to lowercase
+                            'date_time': date_time,  # Already normalized above
+                            'language': cells[2].text.strip(),  # Keep language case as-is
+                            'service_type': cells[3].text.strip().lower(),  # Normalize service type to lowercase
+                            'info': cells[4].text.strip(),  # Keep info case as-is for readability
+                            'comments': cells[5].text.strip(),  # Keep comments case as-is for readability
                         }
                         assignments.append(assignment)
                 except Exception as e:

@@ -155,13 +155,13 @@ class AssignmentStorage:
         
         def get_assignment_key(assignment: Dict) -> tuple:
             """Get unique identifier for assignment using all main fields"""
+            # Only use core identifying fields for the key
+            # This prevents minor changes in info/comments from causing false duplicates
             return (
                 normalize_value(assignment.get('customer', '')),
                 normalize_value(assignment.get('date_time', '')),
                 normalize_value(assignment.get('language', '')),
-                normalize_value(assignment.get('service_type', '')),
-                normalize_value(assignment.get('info', ''), preserve_case=True),
-                normalize_value(assignment.get('comments', ''), preserve_case=True)
+                normalize_value(assignment.get('service_type', ''))
             )
             
         def clean_assignment(assignment: Dict) -> Dict:

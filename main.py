@@ -48,95 +48,6 @@ def cleanup_driver(driver):
         logger.error(f"Error during driver cleanup: {str(e)}")
         logger.error(traceback.format_exc())
 
-def format_assignment(assignment):
-    """Format a single assignment for consistent structure"""
-    formatted = {}
-    
-    # Fields that should be case-sensitive
-    case_sensitive_fields = {'info', 'comments'}
-    
-    def normalize_value(value: str, preserve_case: bool = False) -> str:
-        """Normalize a value by cleaning spaces and handling case"""
-        if not isinstance(value, str):
-            return str(value)
-        
-        # Replace multiple spaces with single space and strip
-        value = ' '.join(value.split())
-        
-        if not value:
-            return 'N/A'
-            
-        if not preserve_case:
-            value = value.lower()
-            
-        return value
-    
-    # Copy and normalize direct fields
-    direct_fields = {
-        'customer': assignment.get('customer', ''),
-        'language': assignment.get('language', ''),
-        'service_type': assignment.get('service_type', ''),
-        'comments': assignment.get('comments', '')
-    }
-    
-    for field, value in direct_fields.items():
-        preserve_case = field in case_sensitive_fields
-        formatted[field] = normalize_value(value, preserve_case)
-    
-    # Extract fields from info
-    info = assignment.get('info', '')
-    info_lines = [line.strip() for line in info.split('\n') if line.strip()]
-    
-    # Initialize fields that should be extracted from info
-    info_fields = {
-        'contact_person_name_and_phone': 'N/A',
-        'contact_person\'s_email_address': 'N/A',
-        'address': 'N/A',
-        'location': 'N/A',
-        'client_name_and_phone': 'N/A'
-    }
-    formatted.update(info_fields)
-    
-    # Process each line of info
-    current_field = None
-    current_value = []
-    
-    for line in info_lines:
-        # Check for field markers
-        if 'Contact person\'s name and phone number:' in line:
-            if current_field and current_value:
-                formatted[current_field] = normalize_value(' '.join(current_value), True)
-            current_field = 'contact_person_name_and_phone'
-            current_value = [line.split(':', 1)[1].strip()]
-        elif 'Contact person\'s email address:' in line:
-            if current_field and current_value:
-                formatted[current_field] = normalize_value(' '.join(current_value), True)
-            current_field = 'contact_person\'s_email_address'
-            current_value = [line.split(':', 1)[1].strip()]
-        elif 'Address:' in line:
-            if current_field and current_value:
-                formatted[current_field] = normalize_value(' '.join(current_value), True)
-            current_field = 'address'
-            current_value = [line.split(':', 1)[1].strip()]
-        elif 'Location:' in line:
-            if current_field and current_value:
-                formatted[current_field] = normalize_value(' '.join(current_value), True)
-            current_field = 'location'
-            current_value = [line.split(':', 1)[1].strip()]
-        elif 'Client name and phone:' in line:
-            if current_field and current_value:
-                formatted[current_field] = normalize_value(' '.join(current_value), True)
-            current_field = 'client_name_and_phone'
-            current_value = [line.split(':', 1)[1].strip()]
-        elif current_field:  # Continue previous field if no new field marker
-            current_value.append(line)
-    
-    # Save the last field being processed
-    if current_field and current_value:
-        formatted[current_field] = normalize_value(' '.join(current_value), True)
-    
-    return formatted
-
 from storage import AssignmentStorage
 
 # Initialize storage
@@ -239,7 +150,7 @@ def main():
                     
                     if send_notification(new_assignment_changes, new_assignments):
                         logger.info("Email notification sent successfully")
-                        metrics.record_error("notification_success")
+                        metrics.record_success("notification_sent")
                         
                         # Save all assignments to storage
                         if storage.save_assignments(formatted_assignments):
