@@ -20,12 +20,15 @@ class MetricsData:
     last_failed_run: Optional[str] = None
     error_counts: Dict[str, int] = None
     validation_error_counts: Dict[str, int] = None
+    success_counts: Dict[str, int] = None
 
     def __post_init__(self):
         if self.error_counts is None:
             self.error_counts = {}
         if self.validation_error_counts is None:
             self.validation_error_counts = {}
+        if self.success_counts is None:
+            self.success_counts = {}
 
 class Metrics:
     """Tracks application metrics and health data"""
@@ -90,6 +93,11 @@ class Metrics:
             
         self._save_metrics()
         
+    def record_success(self, success_type: str):
+        """Record a successful operation"""
+        self.metrics.success_counts[success_type] = self.metrics.success_counts.get(success_type, 0) + 1
+        self._save_metrics()
+
     def record_error(self, error_type: str):
         """Record an error occurrence"""
         self.metrics.error_counts[error_type] = self.metrics.error_counts.get(error_type, 0) + 1
@@ -155,9 +163,19 @@ class Metrics:
             f"- Total Assignments Processed: {self.metrics.total_assignments_processed}",
             f"- Total Notifications Sent: {self.metrics.total_notifications_sent}",
             "",
+            "Success Statistics:",
+            "- Success Types:",
+        ]
+        
+        # Add success counts
+        for success_type, count in self.metrics.success_counts.items():
+            report.append(f"  • {success_type}: {count}")
+            
+        report.extend([
+            "",
             "Error Statistics:",
             "- Error Types:",
-        ]
+        ])
         
         # Add error counts
         for error_type, count in self.metrics.error_counts.items():
