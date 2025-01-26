@@ -28,9 +28,14 @@ class AssignmentValidator:
     # Known valid values for certain fields (case-insensitive)
     VALID_SERVICE_TYPES = {
         'in-person interpretation',
-        'video interpretation',
+        'video interpretation', 
         'phone interpretation',
-        'document translation'
+        'document translation',
+        'in person interpretation',  # Add common variations
+        'in-person',
+        'video',
+        'phone',
+        'document'
     }
     
     # Common languages to check for typos
@@ -73,6 +78,27 @@ class AssignmentValidator:
         # Validate date_time format
         if 'date_time' in assignment:
             date_str = assignment['date_time']
+        else:
+            # Try to extract date/time from info or comments fields
+            date_str = None
+            for field in ['info', 'comments']:
+                if field in assignment:
+                    # Look for common date/time patterns
+                    text = assignment[field]
+                    # Match patterns like MM/DD/YYYY HH:MM AM/PM or YYYY-MM-DD HH:MM
+                    date_matches = re.findall(r'(\d{1,2}/\d{1,2}/\d{2,4}\s+\d{1,2}:\d{2}\s*(?:AM|PM)?|\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})', text)
+                    if date_matches:
+                        date_str = date_matches[0]
+                        assignment['date_time'] = date_str
+                        break
+            
+            if not date_str:
+                errors.append(AssignmentValidationError(
+                    field='date_time',
+                    error="Missing required field and could not extract from other fields",
+                    value="N/A"
+                ))
+                return errors
             try:
                 # Try multiple common date formats and standardize
                 for fmt in ['%m/%d/%Y %I:%M %p', '%Y-%m-%d %H:%M:%S', '%m/%d/%Y\n%I:%M %p']:
@@ -95,12 +121,26 @@ class AssignmentValidator:
         # Validate service type
         if 'service_type' in assignment:
             service_type = assignment['service_type'].lower().strip()
-            if service_type not in cls.VALID_SERVICE_TYPES:
+            # Normalize service type variations
+            normalized_type = service_type
+            if 'in person' in service_type or 'in-person' in service_type:
+                normalized_type = 'in-person interpretation'
+            elif 'video' in service_type:
+                normalized_type = 'video interpretation'
+            elif 'phone' in service_type:
+                normalized_type = 'phone interpretation'
+            elif 'document' in service_type:
+                normalized_type = 'document translation'
+                
+            if normalized_type not in cls.VALID_SERVICE_TYPES:
                 errors.append(AssignmentValidationError(
                     field='service_type',
-                    error=f"Unknown service type. Valid types: {', '.join(cls.VALID_SERVICE_TYPES)}",
+                    error=f"Unknown service type. Valid types: In-person Interpretation, Video Interpretation, Phone Interpretation, Document Translation",
                     value=service_type
                 ))
+            else:
+                # Update to normalized value
+                assignment['service_type'] = normalized_type
         
         # Check for empty or whitespace-only values
         for field, value in assignment.items():
@@ -203,6 +243,31 @@ class AssignmentValidator:
         name = name.lower().strip()
         return not any(re.match(pattern, name) for pattern in invalid_patterns)
 
+def extract_date_time(text: str) -> Optional[str]:
+    """
+    Extract date and time from text using various patterns
+    
+    Args:
+        text: Text to extract date/time from
+        
+    Returns:
+        Extracted date/time string if found, None otherwise
+    """
+    # Common date/time patterns
+    patterns = [
+        r'\b(\d{1,2}/\d{1,2}/\d{2,4}\s+\d{1,2}:\d{2}\s*(?:AM|PM)?)\b',  # MM/DD/YYYY HH:MM AM/PM
+        r'\b(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})\b',  # YYYY-MM-DD HH:MM
+        r'\b(\d{1,2}-\d{1,2}-\d{2,4}\s+\d{1,2}:\d{2}\s*(?:AM|PM)?)\b',  # MM-DD-YYYY HH:MM AM/PM
+        r'\b(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{2,4}\s+\d{1,2}:\d{2}\s*(?:AM|PM)?)\b'  # DD Mon YYYY HH:MM AM/PM
+    ]
+    
+    for pattern in patterns:
+        matches = re.findall(pattern, text, re.IGNORECASE)
+        if matches:
+            return matches[0]
+    
+    return None
+
 def sanitize_assignment(assignment: Dict[str, str]) -> Dict[str, str]:
     """
     Sanitize assignment data by cleaning and normalizing values
@@ -233,20 +298,39 @@ def sanitize_assignment(assignment: Dict[str, str]) -> Dict[str, str]:
         if not value or value.lower() in empty_values:
             value = 'N/A'
             
-        # Handle date_time field
-        if key == 'date_time':
-            try:
-                # Try multiple common date formats and standardize
-                for fmt in ['%m/%d/%Y %I:%M %p', '%Y-%m-%d %H:%M:%S', '%m/%d/%Y\n%I:%M %p']:
+            # Handle date_time field
+            if key == 'date_time':
+                # If date_time is missing, try to extract from other fields
+                if not value or value.lower() in empty_values:
+                    for field in ['info', 'comments']:
+                        if field in assignment:
+                            extracted = extract_date_time(assignment[field])
+                            if extracted:
+                                value = extracted
+                                break
+                
+                if value and value.lower() not in empty_values:
                     try:
-                        dt = datetime.strptime(value, fmt)
-                        value = dt.strftime('%m/%d/%Y %I:%M %p')  # Standardize format
-                        break
-                    except ValueError:
-                        continue
-            except Exception as e:
-                logger.warning(f"Failed to normalize date format: {str(e)}")
-                value = 'N/A'
+                        # Try multiple common date formats and standardize
+                        for fmt in [
+                            '%m/%d/%Y %I:%M %p',  # 01/25/2025 07:30 PM
+                            '%Y-%m-%d %H:%M:%S',   # 2025-01-25 19:30:00
+                            '%m/%d/%Y\n%I:%M %p',  # 01/25/2025\n07:30 PM
+                            '%m/%d/%Y %H:%M',      # 01/25/2025 19:30
+                            '%Y-%m-%d %I:%M %p',   # 2025-01-25 07:30 PM
+                            '%m/%d/%y %I:%M %p',   # 01/25/25 07:30 PM
+                            '%d/%m/%Y %H:%M',      # 25/01/2025 19:30
+                            '%Y/%m/%d %H:%M',      # 2025/01/25 19:30
+                        ]:
+                            try:
+                                dt = datetime.strptime(value, fmt)
+                                value = dt.strftime('%m/%d/%Y %I:%M %p')  # Standardize format
+                                break
+                            except ValueError:
+                                continue
+                    except Exception as e:
+                        logger.warning(f"Failed to normalize date format: {str(e)}")
+                        value = 'N/A'
             
         # Normalize case based on field type
         if key not in case_sensitive_fields:

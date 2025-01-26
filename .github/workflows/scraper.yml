@@ -346,8 +346,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # Stage files
-        git add Previous_assignments.txt
+        # Stage metrics file
         git add data/metrics.json
         
         # Create commit message with health status
