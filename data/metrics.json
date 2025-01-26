@@ -1,11 +1,11 @@
 {
-  "total_runs": 30,
-  "successful_runs": 30,
+  "total_runs": 31,
+  "successful_runs": 31,
   "failed_runs": 0,
-  "total_assignments_processed": 30,
-  "total_notifications_sent": 28,
-  "average_processing_time": 106.5948715108677,
-  "last_successful_run": "2025-01-26T19:03:36.356496",
+  "total_assignments_processed": 31,
+  "total_notifications_sent": 29,
+  "average_processing_time": 107.19408854526678,
+  "last_successful_run": "2025-01-26T19:28:41.755806",
   "last_failed_run": null,
   "error_counts": {
     "notification_success": 23
@@ -16,6 +16,6 @@
     "date_time: Missing required field": 2
   },
   "success_counts": {
-    "notification_sent": 5
+    "notification_sent": 6
   }
 }
