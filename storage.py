@@ -124,6 +124,62 @@ class AssignmentStorage:
             logger.error(f"Error getting assignment history: {str(e)}")
             return []
             
+    def _normalize_value(self, value: str) -> str:
+        """Normalize a value for comparison"""
+        if not isinstance(value, str):
+            return str(value)
+        
+        # Replace multiple spaces with single space, strip, and convert to lowercase
+        return ' '.join(value.split()).lower()
+    
+    def _get_assignment_key(self, assignment: Dict) -> tuple:
+        """Get unique identifier for assignment using all main fields"""
+        # Only use core identifying fields for the key
+        # This prevents minor changes in info/comments from causing false duplicates
+        return (
+            self._normalize_value(assignment.get('customer', '')),
+            self._normalize_value(assignment.get('date_time', '')),
+            self._normalize_value(assignment.get('language', '')),
+            self._normalize_value(assignment.get('service_type', ''))
+        )
+        
+    def _clean_assignment(self, assignment: Dict) -> Dict:
+        """Clean assignment for comparison"""
+        # List of fields to ignore in comparison
+        ignore_fields = {'timestamp', 'last_updated', 'created_at', 'updated_at'}
+        
+        cleaned = {}
+        for key, value in assignment.items():
+            key = key.lower()  # Normalize key to lowercase
+            
+            # Skip timestamp-related fields
+            if key in ignore_fields:
+                continue
+            
+            # Handle missing or empty values
+            if value is None or (isinstance(value, str) and not value.strip()):
+                cleaned[key] = 'n/a'
+                continue
+            
+            # Normalize all values to lowercase
+            cleaned[key] = self._normalize_value(value)
+            
+        return cleaned
+    
+    def _assignments_equal(self, a1: Dict, a2: Dict) -> bool:
+        """Compare two assignments, ignoring case and space differences"""
+        # Get all unique keys
+        all_keys = set(a1.keys()) | set(a2.keys())
+        
+        for key in all_keys:
+            # Get values, defaulting to 'n/a' for missing values
+            v1 = self._normalize_value(a1.get(key, 'n/a'))
+            v2 = self._normalize_value(a2.get(key, 'n/a'))
+            
+            if v1 != v2:
+                return False
+        return True
+    
     def compare_assignments(self, new_assignments: List[Dict]) -> tuple[bool, List[str], List[Dict]]:
         """
         Compare new assignments with stored assignments
@@ -140,78 +196,14 @@ class AssignmentStorage:
         # Fields where case matters
         case_sensitive_fields = {'info', 'comments'}
         
-        def normalize_value(value: str, preserve_case: bool = False) -> str:
-            """Normalize a value for comparison"""
-            if not isinstance(value, str):
-                return str(value)
-            
-            # Replace multiple spaces with single space and strip
-            value = ' '.join(value.split())
-            
-            if not preserve_case:
-                value = value.lower()
-                
-            return value
-        
-        def get_assignment_key(assignment: Dict) -> tuple:
-            """Get unique identifier for assignment using all main fields"""
-            # Only use core identifying fields for the key
-            # This prevents minor changes in info/comments from causing false duplicates
-            return (
-                normalize_value(assignment.get('customer', '')),
-                normalize_value(assignment.get('date_time', '')),
-                normalize_value(assignment.get('language', '')),
-                normalize_value(assignment.get('service_type', ''))
-            )
-            
-        def clean_assignment(assignment: Dict) -> Dict:
-            """Clean assignment for comparison"""
-            # List of fields to ignore in comparison
-            ignore_fields = {'timestamp', 'last_updated', 'created_at', 'updated_at'}
-            
-            cleaned = {}
-            for key, value in assignment.items():
-                key = key.lower()  # Normalize key to lowercase
-                
-                # Skip timestamp-related fields
-                if key in ignore_fields:
-                    continue
-                
-                # Handle missing or empty values
-                if value is None or (isinstance(value, str) and not value.strip()):
-                    cleaned[key] = 'N/A'
-                    continue
-                
-                # Normalize value based on field type
-                preserve_case = key in case_sensitive_fields
-                cleaned[key] = normalize_value(value, preserve_case)
-                
-            return cleaned
-        
-        def assignments_equal(a1: Dict, a2: Dict) -> bool:
-            """Compare two assignments, ignoring case and space differences except where case matters"""
-            # Get all unique keys
-            all_keys = set(a1.keys()) | set(a2.keys())
-            
-            for key in all_keys:
-                # Get values, defaulting to 'N/A' for missing values
-                v1 = a1.get(key, 'N/A')
-                v2 = a2.get(key, 'N/A')
-                
-                # Compare values based on field type
-                preserve_case = key in case_sensitive_fields
-                if normalize_value(v1, preserve_case) != normalize_value(v2, preserve_case):
-                    return False
-            return True
-        
         # Clean assignments for comparison
-        current_cleaned = [clean_assignment(a) for a in current_assignments]
-        new_cleaned = [clean_assignment(a) for a in new_assignments]
+        current_cleaned = [self._clean_assignment(a) for a in current_assignments]
+        new_cleaned = [self._clean_assignment(a) for a in new_assignments]
         
         # Get assignment keys
-        current_keys = {get_assignment_key(a): (a, orig_a) 
+        current_keys = {self._get_assignment_key(a): (a, orig_a) 
                        for a, orig_a in zip(current_cleaned, current_assignments)}
-        new_keys = {get_assignment_key(a): (a, orig_a) 
+        new_keys = {self._get_assignment_key(a): (a, orig_a) 
                    for a, orig_a in zip(new_cleaned, new_assignments)}
         
         # Find added and removed assignments
@@ -237,21 +229,20 @@ class AssignmentStorage:
             new_cleaned, new_orig = new_keys[key]
             
             # Only compare if assignments are actually different
-            if not assignments_equal(current_cleaned, new_cleaned):
+            if not self._assignments_equal(current_cleaned, new_cleaned):
                 # Compare all fields
                 field_changes = []
                 all_fields = set(current_cleaned.keys()) | set(new_cleaned.keys())
                 
                 for field in sorted(all_fields):
-                    current_value = current_cleaned.get(field, 'N/A')
-                    new_value = new_cleaned.get(field, 'N/A')
-                    preserve_case = field in case_sensitive_fields
+                    current_value = current_cleaned.get(field, 'n/a')
+                    new_value = new_cleaned.get(field, 'n/a')
                     
-                    if normalize_value(current_value, preserve_case) != normalize_value(new_value, preserve_case):
+                    if current_value != new_value:
                         # Use original values for display
                         orig_current = current_orig.get(field, 'N/A')
                         orig_new = new_orig.get(field, 'N/A')
-                        if orig_current != orig_new:  # Only show if original values differ
+                        if self._normalize_value(orig_current) != self._normalize_value(orig_new):  # Only show if values truly differ
                             field_changes.append(f"{field}: '{orig_current}' → '{orig_new}'")
                 
                 if field_changes:  # Only add changes if there are actual differences

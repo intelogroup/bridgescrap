@@ -124,35 +124,31 @@ def main():
                 # Process and validate assignments
                 formatted_assignments, has_changes, changes, new_assignments = process_assignments(assignments)
                 
-                if has_changes and new_assignments:  # Only notify if there are new assignments
+                if new_assignments:  # Only notify if there are new assignments
                     logger.info("\nNew assignments detected:")
+                    
+                    # Collect changes for notification
+                    notification_changes = []
                     for change in changes:
                         if change.startswith("New assignment added:"):
+                            notification_changes.append(change)
                             logger.info(change)
-                    
-                    logger.info("\nSending email notification for new assignments...")
                     
                     # Get health status for notification
                     health_status = metrics.get_health_status()
-                    
-                    # Filter changes to only include new assignments
-                    new_assignment_changes = [
-                        change for change in changes 
-                        if change.startswith("New assignment added:")
-                    ]
-                    
                     if not health_status['healthy']:
-                        new_assignment_changes.append("\n⚠️ System Health Warnings:")
+                        notification_changes.append("\n⚠️ System Health Warnings:")
                         for warning in health_status['warnings']:
-                            new_assignment_changes.append(f"- {warning}")
+                            notification_changes.append(f"- {warning}")
                         for error in health_status['errors']:
-                            new_assignment_changes.append(f"- {error}")
+                            notification_changes.append(f"- {error}")
                     
-                    if send_notification(new_assignment_changes, new_assignments):
+                    # Send notification
+                    if send_notification(notification_changes, new_assignments):
                         logger.info("Email notification sent successfully")
                         metrics.record_success("notification_sent")
                         
-                        # Save all assignments to storage
+                        # Save assignments after successful notification
                         if storage.save_assignments(formatted_assignments):
                             logger.info("Assignments saved successfully")
                         else:
