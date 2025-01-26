@@ -1,11 +1,11 @@
 {
-  "total_runs": 25,
-  "successful_runs": 25,
+  "total_runs": 26,
+  "successful_runs": 26,
   "failed_runs": 0,
-  "total_assignments_processed": 25,
-  "total_notifications_sent": 23,
-  "average_processing_time": 106.79381515044625,
-  "last_successful_run": "2025-01-26T17:04:20.381908",
+  "total_assignments_processed": 26,
+  "total_notifications_sent": 24,
+  "average_processing_time": 105.95718127601137,
+  "last_successful_run": "2025-01-26T21:53:46.314704",
   "last_failed_run": null,
   "error_counts": {
     "notification_success": 23
@@ -17,8 +17,14 @@
     "customer: Invalid customer name format": 45,
     "language: Possible typo. Did you mean: French?": 10
   },
-  "success_counts": {},
-  "recent_processing_times": [],
-  "recent_error_rates": [],
+  "success_counts": {
+    "notification_sent": 1
+  },
+  "recent_processing_times": [
+    98.42747640609741
+  ],
+  "recent_error_rates": [
+    0.0
+  ],
   "max_history_size": 100
 }
