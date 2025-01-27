@@ -334,7 +334,7 @@ def sanitize_assignment(assignment: Dict[str, str]) -> Dict[str, str]:
                     except Exception as e:
                         logger.warning(f"Failed to normalize date format: {str(e)}")
                         value = 'N/A'
-            
+        
         # Apply case normalization based on field type
         if key in lowercase_fields:
             value = value.lower()  # Always lowercase for core identifying fields
@@ -356,12 +356,14 @@ def sanitize_assignment(assignment: Dict[str, str]) -> Dict[str, str]:
                 if pattern in value:
                     value = standard
                     break
-            
+                
         # Keep language in original case to preserve proper nouns
         if key == 'language':
             value = value.strip()  # Just clean whitespace, preserve case
             
-        sanitized[key] = value
+        # Exclude headers and timestamps from the sanitized result
+        if key not in {'header', 'timestamp'}:
+            sanitized[key] = value
         
     return sanitized
 
