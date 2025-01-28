@@ -1,15 +1,15 @@
 {
-  "total_runs": 75,
-  "successful_runs": 74,
+  "total_runs": 76,
+  "successful_runs": 75,
   "failed_runs": 0,
-  "total_assignments_processed": 136,
-  "total_notifications_sent": 72,
-  "average_processing_time": 119.57135591503808,
-  "last_successful_run": "2025-01-28T14:54:02.530864",
+  "total_assignments_processed": 138,
+  "total_notifications_sent": 73,
+  "average_processing_time": 118.83936871525792,
+  "last_successful_run": "2025-01-28T15:10:56.690877",
   "last_failed_run": null,
   "error_counts": {
     "notification_success": 23,
-    "notification_failure": 7
+    "notification_failure": 8
   },
   "validation_error_counts": {
     "service_type: Unknown service type. Valid types: In-person Interpretation, Document Translation, Video Interpretation, Phone Interpretation": 1,
@@ -70,9 +70,11 @@
     146.84316658973694,
     120.7505214214325,
     108.77219295501709,
-    115.52134847640991
+    115.52134847640991,
+    112.25148391723633
   ],
   "recent_error_rates": [
+    0.0,
     0.0,
     0.0,
     0.0,
